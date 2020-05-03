@@ -1,5 +1,5 @@
-klassenstufe,name,fächer (fach-stundenzahl-lehrer)
-8,a,M-4-null;D-4-null;E-4-null;S-2-null
+klassenstufe,name,fächer(fach-stundenzahl-lehrer)
+8,a,M-4-Mue;D-4-null;E-4-null;S-2-null
 8,b,M-4-null;D-4-null;E-4-null;S-2-null
 8,c,M-4-null;D-4-null;E-4-null;S-2-null
 9,a,M-4-null;D-4-null;E-4-null;S-2-null

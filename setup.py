@@ -1,4 +1,5 @@
 from setuptools import setup
+import os
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -22,3 +23,4 @@ setup(
         "Operating System :: OS Independent",
         ],
 )
+

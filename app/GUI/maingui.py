@@ -1,28 +1,119 @@
-#  -*- coding: utf-8 -*-
-"""
-GUI
-"""
+import sys
+import os
+
+sys.path.append(os.path.split(os.path.split(os.getcwd())[0])[0])
+
+from app.deputat import AllTeachers, AllClasses, SUBJECT_SHORT_DICT, add_teacher, add_class
+from app.GUI.popups import AddTeacherPopUp, QuitPopUp
 
 from PyQt5.QtWidgets import (QMainWindow, QApplication, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget,
-                             QTabWidget, QComboBox,
-                             QCheckBox)
+                             QTabWidget, QComboBox, QCheckBox, QListWidget, QAction, QFileDialog)
 
-from deputat import AllTeachers, AllClasses, SUBJECT_SHORT_DICT
+from PyQt5.QtGui import QIcon
+
+
+CHANGED = False
 
 
 class MainWindow(QMainWindow):
+    icon_path = os.path.join(os.getcwd(), 'GUI','pictures')
+    location = ''
+
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        title = 'Übersicht'
+        title = 'Deputat - Übersicht'
+        icon = os.path.join(self.icon_path, 'deputat.svg')
         self.setWindowTitle(title)
+        self.setWindowIcon(QIcon(icon))
         self.setGeometry(200, 200, 1250, 500)
 
-        menu_bar = self.menuBar()
-        file_menu = menu_bar.addMenu('File')
-        view_menu = menu_bar.addMenu('View')
+        self._build_menu()
 
-        self.setCentralWidget(MainWidget(self))
+        self.main_widget = MainWidget(self)
+        self.setCentralWidget(self.main_widget)
+
+
+    def _build_menu(self):
+        menu_bar = self.menuBar()
+        file = menu_bar.addMenu("Datei")
+
+        save = QAction(QIcon(os.path.join(self.icon_path, 'save.svg')), "Speichern", self)
+        file.addAction(save)
+        save.triggered.connect(self._save)
+
+        load = file.addMenu(QIcon(os.path.join(self.icon_path, 'add.svg')), "Lade Daten")
+        import_full = QAction(QIcon(os.path.join(self.icon_path, 'import.svg')), 'Vollständiges Set', self)
+        import_teacher = QAction(QIcon(os.path.join(self.icon_path, 'add_teacher.svg')), 'Lehrer', self)
+        import_class = QAction(QIcon(os.path.join(self.icon_path, 'add_class.svg')), 'Klassen', self)
+
+        import_full.triggered.connect(self._import_full)
+        import_teacher.triggered.connect(self._import_teacher)
+        import_class.triggered.connect(self._import_class)
+
+        load.addAction(import_full)
+        load.addAction(import_teacher)
+        load.addAction(import_class)
+
+
+
+        export = file.addMenu(QIcon(os.path.join(self.icon_path, 'export.svg')), 'Exportieren')
+        export.addAction(QAction(QIcon(os.path.join(self.icon_path, 'csv.svg')), 'als .csv', self))
+        file.addSeparator()
+
+        file.addAction(QAction(QIcon(os.path.join(self.icon_path, 'exit.svg')), "Quit", self))
+
+        info = menu_bar.addMenu("Info")
+        info.addAction(QAction(QIcon(os.path.join(self.icon_path, 'about.svg')), "Über", self))
+        info.addAction(QAction(QIcon(os.path.join(self.icon_path, 'github.svg')), "GitHub", self))
+        info.addAction(QAction(QIcon(os.path.join(self.icon_path, 'pypi.svg')), "PyPi", self))
+
+        help = menu_bar.addMenu("Hilfe")
+        help.addAction(QAction(QIcon(os.path.join(self.icon_path, 'mail.svg')), "Mail", self))
+        help.addAction(QAction(QIcon(os.path.join(self.icon_path, 'github.svg')), "GitHub", self))
+        help.addAction(QAction(QIcon(os.path.join(self.icon_path, 'readme.svg')), "Readme", self))
+
+
+    def closeEvent(self, event):
+        if CHANGED:
+            close = QuitPopUp('exit').get()
+            if close:
+                event.accept()
+            else:
+                event.ignore()
+        else:
+            event.accept()
+
+
+    def _import_full(self):
+        path = QFileDialog.getExistingDirectory(self, 'Odner wählen')
+        if not self.location:
+            self.location = path
+        AllClasses().read_data(path)
+        AllTeachers().read_data(path)
+        MainWidget._refresh(self.main_widget)
+
+
+    def _import_teacher(self):
+        path = QFileDialog.getOpenFileName(self, 'Odner wählen')[0]
+        if not self.location:
+            self.location = path
+        AllTeachers().read_data(path, True, additional=True)
+        MainWidget._refresh(self.main_widget)
+
+
+    def _import_class(self):
+        path = QFileDialog.getOpenFileName(self, 'Odner wählen')[0]
+        if not self.location:
+            self.location = path
+        AllClasses().read_data(path, True, additional=True)
+        MainWidget._refresh(self.main_widget)
+
+
+    def _save(self):
+        AllClasses().save_data(self.location)
+        AllTeachers().save_data(self.location)
+        CHANGED = False
 
 
 class MainWidget(QWidget):
@@ -77,16 +168,19 @@ class MainWidget(QWidget):
 
         self.spec_teacher.toggled.connect(self.select_teacher.setEnabled)
 
-        search_button = QPushButton('OK')
         reset_button = QPushButton('Zurücksetzen')
 
-        search_button.clicked.connect(self._search_classes)
+        self.select_level.currentTextChanged.connect(self._search_classes)
+        self.hours_missing.stateChanged.connect(self._search_classes)
+        self.done_classes.stateChanged.connect(self._search_classes)
+        self.spec_teacher.stateChanged.connect(self._search_classes)
+        self.select_teacher.currentTextChanged.connect(self._search_classes)
         reset_button.clicked.connect(self._reset)
 
         sublayout_top.addWidget(level_label)
         sublayout_top.addWidget(self.select_level)
         sublayout_bot.addWidget(reset_button)
-        sublayout_bot.addWidget(search_button)
+        #sublayout_bot.addWidget(search_button)
 
         layout.addLayout(sublayout_top)
         layout.addWidget(self.hours_missing)
@@ -105,6 +199,11 @@ class MainWidget(QWidget):
         """
 
         self.BLGB = QGroupBox('Reststunden Lehrer')
+        self.blgb_layout = QHBoxLayout()
+        self.list_area = QListWidget()
+        self._build_teacher_list()
+        self.blgb_layout.addWidget(self.list_area)
+        self.BLGB.setLayout(self.blgb_layout)
 
 
     def createTRGB(self):
@@ -112,17 +211,20 @@ class MainWidget(QWidget):
         places GroupBox to top-left
         """
 
-        self.TRGB = QGroupBox('Klassen')
+        self.TRGB = QGroupBox('Deputat')
         gb_layout = QVBoxLayout()
         self.tabs = QTabWidget()
         self._list_tabs()
         layout_tab_bot = QHBoxLayout()
-        cancel_button = QPushButton('Änderungen verwerfen')
-        ok_button = QPushButton('Änderungen übernehmen')
-        cancel_button.setStyleSheet("background-color: red")
-        ok_button.setStyleSheet("background-color: green")
-        layout_tab_bot.addWidget(cancel_button)
-        layout_tab_bot.addWidget(ok_button)
+
+        add_teacher_button = QPushButton('Lehrer Hinzufügen')
+        add_class_button = QPushButton('Klasse Hinzufügen')
+
+        add_teacher_button.clicked.connect(self._add_teacher)
+        add_class_button.clicked.connect(self._add_class)
+
+        layout_tab_bot.addWidget(add_teacher_button)
+        layout_tab_bot.addWidget(add_class_button)
         gb_layout.addWidget(self.tabs)
         gb_layout.addLayout(layout_tab_bot)
         self.TRGB.setLayout(gb_layout)
@@ -145,9 +247,13 @@ class MainWidget(QWidget):
 
         layout.addLayout(top)
         layout.addLayout(self.selected)
-        self.searchbar.activated.connect(self._changed_search)
+        self.searchbar.currentTextChanged.connect(self._changed_search)
         self.BRGB.setLayout(layout)
         # ----------------end Layout----------------
+
+    def _build_teacher_list(self):
+        self.list_area.clear()
+        self.list_area.addItems(AllTeachers()._list_teacher_hours())
 
 
     def _add_tab(self, obj):
@@ -167,7 +273,7 @@ class MainWidget(QWidget):
         return selected
 
 
-    def _changed_search(self):
+    def _changed_search(self, t_name=None):
         name = self.searchbar.currentText()
         text = ''
         for t in AllTeachers.teachers:
@@ -177,6 +283,11 @@ class MainWidget(QWidget):
             self.info.setText('Keine Lehrkraft ausgewählt')
         else:
             self.info.setText(text)
+        if t_name:
+            for t in AllTeachers.teachers:
+                if t.name == t_name:
+                    self.searchbar.setCurrentText(t_name)
+                    break
 
 
     def _list_available_teachers(self, subject):
@@ -265,25 +376,46 @@ class MainWidget(QWidget):
 
     def teacher_added(self, klasse, text, short):
         teacher = None
+        name = None
         for t in AllTeachers.teachers:
             if t.short in text:
                 teacher = t
                 break
-        AllClasses.backup = AllClasses.classes.copy()
+        if not AllClasses.backup:
+            AllClasses.backup = AllClasses.classes.copy()
         for c in AllClasses.classes:
             if c == klasse:
                 for s in c.subjects:
                     if s != short:
                         continue
-                    if text == 'Lehrkraft auswählen':
-                        c.subjects[s][1] = 'null'
-                    else:
+                    try:
                         c.subjects[s][1] = teacher.short
-        self._changed_search()
+                        name = teacher.name
+                    except AttributeError:
+                        c.subjects[s][1] = 'null'
+        self._refresh(name)
+        global CHANGED
+        CHANGED = True
+
+    def _add_class(self):
+        add_class()
+        self._refresh()
+
+
+    def _add_teacher(self):
+        exPopup = AddTeacherPopUp('Lehrer Hinzufügen', self)
+        exPopup.setGeometry(100, 200, 500, 300)
+        exPopup.show()
+        self._refresh()
+
+
+    def _refresh(self, name=None):
+        self._changed_search(name)
         self._search_classes()
+        self._build_teacher_list()
 
 
-if __name__ == '__main__':
+def run():
     import sys
     app = QApplication(sys.argv)
     gallery = MainWindow()
