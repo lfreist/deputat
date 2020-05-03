@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="29c63c6c-c14f-454c-bca9-7cbaa6f23efd" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/deputat.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/PKG-INFO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deputat.egg-info/top_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/top_level.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -175,7 +177,7 @@
       <workItem from="1588444241849" duration="8332000" />
       <workItem from="1588492339637" duration="24227000" />
       <workItem from="1588519506065" duration="385000" />
-      <workItem from="1588522458024" duration="5827000" />
+      <workItem from="1588522458024" duration="5986000" />
     </task>
     <servers />
   </component>

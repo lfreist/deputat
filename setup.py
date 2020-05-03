@@ -12,7 +12,6 @@ setup(
     url="https://github.com/lfreist/deputat",
     author='lfreist',
     author_email='freist.leon@gmx.de',
-    packages=['deputat'],
     install_requires=[
               'PyQt5',
               ],
