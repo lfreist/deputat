@@ -3,8 +3,8 @@ import os
 
 sys.path.append(os.path.split(os.path.split(os.getcwd())[0])[0])
 
-from deputat.app.deputat import AllTeachers, AllClasses, SUBJECT_SHORT_DICT, add_teacher, add_class
-from deputat.app.GUI.popups import AddTeacherPopUp, QuitPopUp
+from app.deputat import AllTeachers, AllClasses, SUBJECT_SHORT_DICT, add_teacher, add_class
+from app.GUI.popups import AddTeacherPopUp, QuitPopUp
 
 from PyQt5.QtWidgets import (QMainWindow, QApplication, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget,
                              QTabWidget, QComboBox, QCheckBox, QListWidget, QAction, QFileDialog)
@@ -16,7 +16,7 @@ CHANGED = False
 
 
 class MainWindow(QMainWindow):
-    icon_path = os.path.join(os.getcwd(),'deputat', 'app', 'GUI','pictures')
+    icon_path = os.path.join(os.getcwd(), 'app', 'GUI','pictures')
     location = ''
 
     def __init__(self, parent=None):
@@ -118,7 +118,7 @@ class MainWindow(QMainWindow):
 
 
 class MainWidget(QWidget):
-    icon_path = os.path.join(os.getcwd(),'deputat', 'app', 'GUI','pictures')
+    icon_path = os.path.join(os.getcwd(), 'app', 'GUI','pictures')
 
     def __init__(self, parent=None):
         super().__init__(parent)

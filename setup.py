@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='deputat',
-    version='0.1.2',
+    version='0.2.1',
     description='deputat overview',
     long_description=long_description,
     long_description_content_type="text/markdown",
