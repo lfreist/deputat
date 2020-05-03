@@ -3,13 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="29c63c6c-c14f-454c-bca9-7cbaa6f23efd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/GUI/maingui.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/GUI/maingui.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/GUI/popups.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/GUI/popups.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/deputat.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backup_data/klassen.csv" beforeDir="false" afterPath="$PROJECT_DIR$/backup_data/klassen.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backup_data/lehrer.csv" beforeDir="false" afterPath="$PROJECT_DIR$/backup_data/lehrer.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/klassen.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/klassen.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/lehrer.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/lehrer.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/__main__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/klassen.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/lehrer.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,16 +51,13 @@
       <module name="deputat" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/__main__.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/__main__.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -160,9 +157,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.__main__" />
+        <item itemvalue="Python.__main__" />
         <item itemvalue="Python.deputat" />
         <item itemvalue="Python.test" />
-        <item itemvalue="Python.__main__" />
         <item itemvalue="Python.__main__" />
       </list>
     </recent_temporary>
@@ -185,6 +182,7 @@
       <workItem from="1588444241849" duration="8332000" />
       <workItem from="1588492339637" duration="24227000" />
       <workItem from="1588519506065" duration="385000" />
+      <workItem from="1588522458024" duration="3331000" />
     </task>
     <servers />
   </component>
@@ -192,10 +190,10 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="697" y="354" width="582" height="396" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588492540192">
+    <state x="697" y="354" width="582" height="396" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588522906262">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="697" y="354" width="582" height="396" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1588492540192" />
+    <state x="697" y="354" width="582" height="396" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1588522906262" />
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1588427776108">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>

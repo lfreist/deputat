@@ -1,13 +1,13 @@
 import os
 
-from app.deputat import AllTeachers, AllClasses
+from deputat.app.deputat import AllTeachers, AllClasses
 
 from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog,
 QDialogButtonBox, QFormLayout, QGridLayout, QGroupBox, QHBoxLayout,
 QLabel, QLineEdit, QMenu, QMenuBar, QPushButton, QSpinBox, QTextEdit,
 QVBoxLayout, QMessageBox, QCheckBox, QSlider)
 
-from app.deputat import SUBJECT_LONG_DICT
+from deputat.app.deputat import SUBJECT_LONG_DICT
 
 from PyQt5.QtGui import QIcon
 
@@ -15,7 +15,7 @@ from PyQt5.QtCore import Qt
 
 
 class AddTeacherPopUp(QDialog):
-    icon_path = os.path.join(os.getcwd(), 'GUI', 'pictures')
+    icon_path = os.path.join(os.getcwd(),'deputat', 'app', 'GUI','pictures')
     NumGridRows = 3
     NumButtons = 4
 

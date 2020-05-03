@@ -1,5 +1,5 @@
 import os
-from app.GUI import maingui
+from deputat.app.GUI import maingui
 
 
 if __name__ == '__main__':

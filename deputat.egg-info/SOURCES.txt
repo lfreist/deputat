@@ -1,0 +1,7 @@
+README.md
+setup.py
+deputat.egg-info/PKG-INFO
+deputat.egg-info/SOURCES.txt
+deputat.egg-info/dependency_links.txt
+deputat.egg-info/requires.txt
+deputat.egg-info/top_level.txt
