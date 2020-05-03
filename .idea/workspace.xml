@@ -2,13 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="29c63c6c-c14f-454c-bca9-7cbaa6f23efd" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/GUI/maingui.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/GUI/maingui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/GUI/popups.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/GUI/popups.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/deputat.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/maingui.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/GUI/maingui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backup_data/klassen.csv" beforeDir="false" afterPath="$PROJECT_DIR$/backup_data/klassen.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backup_data/lehrer.csv" beforeDir="false" afterPath="$PROJECT_DIR$/backup_data/lehrer.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/klassen.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/klassen.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/lehrer.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/lehrer.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +51,9 @@
       <module name="deputat" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -135,6 +139,9 @@
       <module name="deputat" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -153,10 +160,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.__main__" />
+        <item itemvalue="Python.deputat" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.__main__" />
         <item itemvalue="Python.__main__" />
-        <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
   </component>
@@ -176,7 +183,8 @@
       <workItem from="1588427770759" duration="8000" />
       <workItem from="1588427780600" duration="523000" />
       <workItem from="1588444241849" duration="8332000" />
-      <workItem from="1588492339637" duration="15867000" />
+      <workItem from="1588492339637" duration="24227000" />
+      <workItem from="1588519506065" duration="385000" />
     </task>
     <servers />
   </component>
@@ -192,38 +200,38 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1588427776108" />
-    <state width="1807" height="344" key="GridCell.Tab.0.bottom" timestamp="1588507571114">
+    <state width="1807" height="344" key="GridCell.Tab.0.bottom" timestamp="1588519493191">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="344" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1588507571114" />
-    <state width="1807" height="344" key="GridCell.Tab.0.center" timestamp="1588507571113">
+    <state width="1807" height="344" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1588519493191" />
+    <state width="1807" height="344" key="GridCell.Tab.0.center" timestamp="1588519493190">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="344" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1588507571113" />
-    <state width="1807" height="344" key="GridCell.Tab.0.left" timestamp="1588507571113">
+    <state width="1807" height="344" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1588519493190" />
+    <state width="1807" height="344" key="GridCell.Tab.0.left" timestamp="1588519493189">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="344" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1588507571113" />
-    <state width="1807" height="344" key="GridCell.Tab.0.right" timestamp="1588507571114">
+    <state width="1807" height="344" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1588519493189" />
+    <state width="1807" height="344" key="GridCell.Tab.0.right" timestamp="1588519493190">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="344" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1588507571114" />
-    <state width="1807" height="344" key="GridCell.Tab.1.bottom" timestamp="1588507571115">
+    <state width="1807" height="344" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1588519493190" />
+    <state width="1807" height="344" key="GridCell.Tab.1.bottom" timestamp="1588519493192">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="344" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1588507571115" />
-    <state width="1807" height="344" key="GridCell.Tab.1.center" timestamp="1588507571114">
+    <state width="1807" height="344" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1588519493192" />
+    <state width="1807" height="344" key="GridCell.Tab.1.center" timestamp="1588519493191">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="344" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1588507571114" />
-    <state width="1807" height="344" key="GridCell.Tab.1.left" timestamp="1588507571114">
+    <state width="1807" height="344" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1588519493191" />
+    <state width="1807" height="344" key="GridCell.Tab.1.left" timestamp="1588519493191">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="344" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1588507571114" />
-    <state width="1807" height="344" key="GridCell.Tab.1.right" timestamp="1588507571115">
+    <state width="1807" height="344" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1588519493191" />
+    <state width="1807" height="344" key="GridCell.Tab.1.right" timestamp="1588519493192">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="344" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1588507571115" />
+    <state width="1807" height="344" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1588519493192" />
     <state x="603" y="166" width="770" height="773" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1588501548221">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>

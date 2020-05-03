@@ -12,7 +12,7 @@ SUBJECT_LONG_DICT = {
 SUBJECT_SHORT_DICT = {short: long for long, short in SUBJECT_LONG_DICT.items()}
 
 base_dir = os.path.split(os.getcwd())[0]
-data_dir = os.path.join(base_dir, 'data')
+data_dir = os.path.join(base_dir, 'backup_data')
 
 
 class Class:
@@ -142,6 +142,16 @@ class AllTeachers:
         return list
 
 
+    def add_teacher(self, name, short, hours, subjects):
+        new = Teacher(name, short, hours, subjects)
+        for i in self.teachers:
+            if i.short == new.short:
+                return False
+        self.teachers.append(new)
+        print(new)
+        return True
+
+
 class AllClasses:
     classes = []
     backup = []
@@ -227,3 +237,7 @@ def add_teacher():
 
 def add_class():
     print('class added')
+
+
+if __name__ == '__main__':
+    AllTeachers().read_data(data_dir)

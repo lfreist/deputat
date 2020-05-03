@@ -113,10 +113,13 @@ class MainWindow(QMainWindow):
     def _save(self):
         AllClasses().save_data(self.location)
         AllTeachers().save_data(self.location)
+        global CHANGED
         CHANGED = False
 
 
 class MainWidget(QWidget):
+    icon_path = os.path.join(os.getcwd(), 'GUI', 'pictures')
+
     def __init__(self, parent=None):
         super().__init__(parent)
 
@@ -156,14 +159,14 @@ class MainWidget(QWidget):
 
         level_label = QLabel('Klassenstufe: ')
         self.select_level = QComboBox()
-        self.select_level.addItems(['Alle'] + self._get_class_levels())
+        self.fill_combo_level()
 
         self.hours_missing = QCheckBox('Nur Klassen mit fehlenden Stunden')
         self.done_classes = QCheckBox('Nur volltändige Klassen')
         self.spec_teacher = QCheckBox('Nur spezifische Lehrkraft')
 
         self.select_teacher = QComboBox()
-        self.select_teacher.addItems(['Lehrkraft auswählen'] + [t.name for t in AllTeachers.teachers])
+        self.fill_combo_teacher()
         self.select_teacher.setDisabled(True)
 
         self.spec_teacher.toggled.connect(self.select_teacher.setEnabled)
@@ -191,6 +194,14 @@ class MainWidget(QWidget):
 
         self.TLGB.setLayout(layout)
 
+    def fill_combo_teacher(self):
+        self.select_teacher.clear()
+        self.select_teacher.addItems(['Lehrkraft auswählen'] + [t.name for t in AllTeachers.teachers])
+
+
+    def fill_combo_level(self):
+        self.select_level.clear()
+        self.select_level.addItems(['Alle'] + self._get_class_levels())
 
 
     def createBLGB(self):
@@ -218,7 +229,9 @@ class MainWidget(QWidget):
         layout_tab_bot = QHBoxLayout()
 
         add_teacher_button = QPushButton('Lehrer Hinzufügen')
+        add_teacher_button.setIcon(QIcon(os.path.join(self.icon_path, 'add.svg')))
         add_class_button = QPushButton('Klasse Hinzufügen')
+        add_class_button.setIcon(QIcon(os.path.join(self.icon_path, 'add.svg')))
 
         add_teacher_button.clicked.connect(self._add_teacher)
         add_class_button.clicked.connect(self._add_class)
@@ -240,7 +253,7 @@ class MainWidget(QWidget):
         layout = QVBoxLayout()
         top = QHBoxLayout()
         self.searchbar = QComboBox()
-        self.searchbar.addItems(['Lehrkraft auswählen'] + [t.name for t in AllTeachers.teachers])
+        self.fill_combo_teacher()
         top.addWidget(self.searchbar)
 
         self.selected = self._selected_teacher()
@@ -250,6 +263,12 @@ class MainWidget(QWidget):
         self.searchbar.currentTextChanged.connect(self._changed_search)
         self.BRGB.setLayout(layout)
         # ----------------end Layout----------------
+
+
+    def fill_combo_teacher_search(self):
+        self.searchbar.clear()
+        self.searchbar.addItems(['Lehrkraft auswählen'] + [t.name for t in AllTeachers.teachers])
+
 
     def _build_teacher_list(self):
         self.list_area.clear()
@@ -403,9 +422,9 @@ class MainWidget(QWidget):
 
 
     def _add_teacher(self):
-        exPopup = AddTeacherPopUp('Lehrer Hinzufügen', self)
-        exPopup.setGeometry(100, 200, 500, 300)
-        exPopup.show()
+        add_t = AddTeacherPopUp('Lehrer Hinzufügen', self)
+        add_t.setGeometry(100, 200, 500, 300)
+        add_t.show()
         self._refresh()
 
 
@@ -413,6 +432,9 @@ class MainWidget(QWidget):
         self._changed_search(name)
         self._search_classes()
         self._build_teacher_list()
+        self.fill_combo_teacher()
+        self.fill_combo_level()
+        self.fill_combo_teacher_search()
 
 
 def run():
