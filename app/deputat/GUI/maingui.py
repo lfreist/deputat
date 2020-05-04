@@ -1,13 +1,15 @@
-import sys
 import os
+import sys
+import settings
 
-sys.path.append(os.path.split(os.path.split(os.getcwd())[0])[0])
+sys.path.insert(1, settings.base_dir())
 
-from app.deputat import AllTeachers, AllClasses, SUBJECT_SHORT_DICT, add_teacher, add_class
-from app.GUI.popups import AddTeacherPopUp, QuitPopUp
+from deputat import AllTeachers, AllClasses, SUBJECT_SHORT_DICT, add_class
+from GUI.popups import AddTeacherPopUp, QuitPopUp
 
-from PyQt5.QtWidgets import (QMainWindow, QApplication, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget,
-                             QTabWidget, QComboBox, QCheckBox, QListWidget, QAction, QFileDialog)
+from PyQt5.QtWidgets import (QMainWindow, QApplication, QGroupBox, QHBoxLayout,
+                             QLabel, QPushButton, QVBoxLayout, QWidget, QTabWidget,
+                             QComboBox, QCheckBox, QListWidget, QAction, QFileDialog)
 
 from PyQt5.QtGui import QIcon
 
@@ -16,7 +18,7 @@ CHANGED = False
 
 
 class MainWindow(QMainWindow):
-    icon_path = os.path.join(os.getcwd(), 'app', 'GUI','pictures')
+    icon_path = settings.icon_dir()
     location = ''
 
     def __init__(self, parent=None):
@@ -118,7 +120,7 @@ class MainWindow(QMainWindow):
 
 
 class MainWidget(QWidget):
-    icon_path = os.path.join(os.getcwd(), 'app', 'GUI','pictures')
+    icon_path = settings.icon_dir()
 
     def __init__(self, parent=None):
         super().__init__(parent)

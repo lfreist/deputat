@@ -5,7 +5,9 @@ SUBJECT_LONG_DICT = {
     'Mathe': 'M',
     'Deutsch': 'D',
     'Englisch': 'E',
-    'Sport': 'S'
+    'Sport': 'S',
+    'Französisch': 'F',
+    'Technik': 'T'
 }
 
 # reversed dictionary for subjects
