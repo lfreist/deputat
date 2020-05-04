@@ -2,45 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="29c63c6c-c14f-454c-bca9-7cbaa6f23efd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/deputat/GUI/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/deputat/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/deputat/__main__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/deputat/run.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/deputat/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/deputat-0.2.2-py3-none-any.whl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/deputat-0.2.2.tar.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/maingui.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/maingui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/about.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/about.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/add.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/add.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/add_class.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/add_class.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/add_teacher.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/add_teacher.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/csv.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/csv.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/deputat.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/deputat.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/edit.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/edit.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/exit.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/exit.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/export.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/export.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/full_screen.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/full_screen.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/github.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/github.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/github_text.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/github_text.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/import.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/import.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/mail.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/mail.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/new.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/new.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/paypal.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/paypal.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/print.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/print.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/pypi.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/pypi.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/readme.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/readme.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/save.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/save.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/pictures/submit.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/pictures/submit.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GUI/popups.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/GUI/popups.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/__main__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/deputat.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/deputat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/initialize.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/klassen.csv" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/data/klassen.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/lehrer.csv" beforeDir="false" afterPath="$PROJECT_DIR$/app/deputat/data/lehrer.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deputat.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/PKG-INFO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deputat.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/SOURCES.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/deputat.egg-info/top_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/top_level.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
@@ -85,6 +49,9 @@
       <module name="deputat" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app/deputat" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -148,6 +115,9 @@
       <module name="deputat" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app/deputat" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -214,7 +184,8 @@
       <workItem from="1588492339637" duration="24227000" />
       <workItem from="1588519506065" duration="385000" />
       <workItem from="1588522458024" duration="6617000" />
-      <workItem from="1588578953272" duration="5265000" />
+      <workItem from="1588578953272" duration="5606000" />
+      <workItem from="1588585880523" duration="14000" />
     </task>
     <servers />
   </component>
