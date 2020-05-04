@@ -1,10 +1,10 @@
 README.md
 setup.py
-app/deputat/__init__.py
-app/deputat/__main__.py
-app/deputat/deputat.py
-app/deputat/run.py
-app/deputat/settings.py
+deputat/__init__.py
+deputat/__main__.py
+deputat/deputat.py
+deputat/run.py
+deputat/settings.py
 deputat.egg-info/PKG-INFO
 deputat.egg-info/SOURCES.txt
 deputat.egg-info/dependency_links.txt
