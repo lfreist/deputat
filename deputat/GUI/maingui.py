@@ -1,15 +1,18 @@
 import os
-import sys
-from deputat import settings
 
-sys.path.insert(1, settings.base_dir())
-
-from deputat.deputat import AllTeachers, AllClasses, SUBJECT_SHORT_DICT, add_class
-from deputat.GUI.popups import AddTeacherPopUp, QuitPopUp
+try:
+    from deputat import settings
+    from deputat.script.deputat import AllTeachers, AllClasses, SUBJECT_SHORT_DICT, add_class
+    from deputat.GUI.popups import AddTeacherPopUp, AddClassPopUp, QuitPopUp
+except ImportError:
+    import settings
+    from script.deputat import AllTeachers, AllClasses, SUBJECT_SHORT_DICT
+    from GUI.popups import AddTeacherPopUp, AddClassPopUp, QuitPopUp
 
 from PyQt5.QtWidgets import (QMainWindow, QApplication, QGroupBox, QHBoxLayout,
                              QLabel, QPushButton, QVBoxLayout, QWidget, QTabWidget,
-                             QComboBox, QCheckBox, QListWidget, QAction, QFileDialog)
+                             QComboBox, QCheckBox, QListWidget, QAction, QFileDialog,
+                             QFileSystemModel, QTreeView)
 
 from PyQt5.QtGui import QIcon
 
@@ -23,6 +26,8 @@ class MainWindow(QMainWindow):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.allclasses = AllClasses()
+        self.allteachers = AllTeachers()
 
         title = 'Deputat - Übersicht'
         icon = os.path.join(self.icon_path, 'deputat.svg')
@@ -31,6 +36,7 @@ class MainWindow(QMainWindow):
         self.setGeometry(200, 200, 1250, 500)
 
         self._build_menu()
+        self.statusBar().showMessage('test')
 
         self.main_widget = MainWidget(self)
         self.setCentralWidget(self.main_widget)
@@ -56,8 +62,6 @@ class MainWindow(QMainWindow):
         load.addAction(import_full)
         load.addAction(import_teacher)
         load.addAction(import_class)
-
-
 
         export = file.addMenu(QIcon(os.path.join(self.icon_path, 'export.svg')), 'Exportieren')
         export.addAction(QAction(QIcon(os.path.join(self.icon_path, 'csv.svg')), 'als .csv', self))
@@ -91,32 +95,40 @@ class MainWindow(QMainWindow):
         path = QFileDialog.getExistingDirectory(self, 'Odner wählen')
         if not self.location:
             self.location = path
-        AllClasses().read_data(path)
-        AllTeachers().read_data(path)
-        MainWidget._refresh(self.main_widget)
+        self.allclasses.read_data(path)
+        self.allteachers.read_data(path)
+        self.main_widget._refresh(self.main_widget)
+        print(self.allclasses.classes)
+        print(self.allteachers.teachers)
 
 
     def _import_teacher(self):
         path = QFileDialog.getOpenFileName(self, 'Odner wählen')[0]
         if not self.location:
             self.location = path
-        AllTeachers().read_data(path, True, additional=True)
-        MainWidget._refresh(self.main_widget)
+        self.allteachers.read_data(path, True, additional=True)
+        self.main_widget._refresh(self.main_widget)
+        self.statusBar().showMessage(f'{os.path.split(path)[1]} importiert')
 
 
     def _import_class(self):
         path = QFileDialog.getOpenFileName(self, 'Odner wählen')[0]
         if not self.location:
             self.location = path
-        AllClasses().read_data(path, True, additional=True)
-        MainWidget._refresh(self.main_widget)
+        self.allclasses.read_data(path, True, additional=True)
+        self.main_widget._refresh(self.main_widget)
+        self.statusBar().showMessage(f'{os.path.split(path)[1]} importiert')
 
 
     def _save(self):
-        AllClasses().save_data(self.location)
-        AllTeachers().save_data(self.location)
+        a = self.allclasses.save_data()
+        b = self.allteachers.save_data()
         global CHANGED
         CHANGED = False
+        if a and b:
+            self.statusBar().showMessage('erfolgreich gespeichert')
+        else:
+            self.statusBar().showMessage('speichern nicht erfolgreich!')
 
 
 class MainWidget(QWidget):
@@ -124,6 +136,7 @@ class MainWidget(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.mainwindow = parent
 
         # ----------------create GroupBoxes-------------
         self.createTLGB()
@@ -198,12 +211,12 @@ class MainWidget(QWidget):
 
     def fill_combo_teacher(self):
         self.select_teacher.clear()
-        self.select_teacher.addItems(['Lehrkraft auswählen'] + [t.name for t in AllTeachers.teachers])
+        self.select_teacher.addItems(['Lehrkraft auswählen'] + [t.name for t in self.mainwindow.allteachers.teachers])
 
 
     def fill_combo_level(self):
         self.select_level.clear()
-        self.select_level.addItems(['Alle'] + self._get_class_levels())
+        self.select_level.addItems(['Alle'] + self.mainwindow.allclasses.list_levels())
 
 
     def createBLGB(self):
@@ -227,7 +240,7 @@ class MainWidget(QWidget):
         self.TRGB = QGroupBox('Deputat')
         gb_layout = QVBoxLayout()
         self.tabs = QTabWidget()
-        self._list_tabs()
+        self._list_tabs(self.mainwindow.allclasses.classes)
         layout_tab_bot = QHBoxLayout()
 
         add_teacher_button = QPushButton('Lehrer Hinzufügen')
@@ -269,12 +282,12 @@ class MainWidget(QWidget):
 
     def fill_combo_teacher_search(self):
         self.searchbar.clear()
-        self.searchbar.addItems(['Lehrkraft auswählen'] + [t.name for t in AllTeachers.teachers])
+        self.searchbar.addItems(['Lehrkraft auswählen'] + [t.name for t in self.mainwindow.allteachers.teachers])
 
 
     def _build_teacher_list(self):
         self.list_area.clear()
-        self.list_area.addItems(AllTeachers()._list_teacher_hours())
+        self.list_area.addItems(self.mainwindow.allteachers._list_teacher_hours())
 
 
     def _add_tab(self, obj):
@@ -297,7 +310,7 @@ class MainWidget(QWidget):
     def _changed_search(self, t_name=None):
         name = self.searchbar.currentText()
         text = ''
-        for t in AllTeachers.teachers:
+        for t in self.mainwindow.allteachers.teachers:
             if t.name == name:
                 text = str(t)
         if name == 'Lehrkraft auswählen':
@@ -305,7 +318,7 @@ class MainWidget(QWidget):
         else:
             self.info.setText(text)
         if t_name:
-            for t in AllTeachers.teachers:
+            for t in self.mainwindow.allteachers.teachers:
                 if t.name == t_name:
                     self.searchbar.setCurrentText(t_name)
                     break
@@ -313,16 +326,8 @@ class MainWidget(QWidget):
 
     def _list_available_teachers(self, subject):
         return ['Lehrkraft wählen'] + [f'{t.name} ({t.short}) - {t._get_hours_left()} Stunden übrig'
-                                       for t in AllTeachers.teachers
+                                       for t in self.mainwindow.allteachers.teachers
                                        if subject in t.subjects]
-
-
-    def _get_class_levels(self):
-        liste = []
-        for c in AllClasses.classes:
-            if c.level not in liste:
-                liste.append(c.level)
-        return liste
 
 
     def _reset(self):
@@ -342,11 +347,11 @@ class MainWidget(QWidget):
         classes = []
         current_text = self.select_teacher.currentText()
         if self.spec_teacher.checkState() and current_text != 'Lehrkraft auswählen':
-            for t in AllTeachers.teachers:
+            for t in self.mainwindow.allteachers.teachers:
                 if t.name == current_text:
                     teacher = t
                     break
-        for c in AllClasses.classes:
+        for c in self.mainwindow.allclasses.classes:
             if str(c.level) == levels or levels == 'Alle':
                 classes.append(c)
         if hours_missing:
@@ -364,13 +369,13 @@ class MainWidget(QWidget):
         self._list_tabs(classes)
 
 
-    def _list_tabs(self, classes=AllClasses.classes):
+    def _list_tabs(self, classes):
         last_tab = self.tabs.currentIndex()
         for i in list(range(self.tabs.count()))[::-1]:
             self.tabs.removeTab(i)
-        for obj in classes:
-            name = obj.get_fullname()
-            self.tabs.addTab(self._add_tab(obj), name)
+        liste = sorted([obj for obj in classes])
+        for obj in liste:
+            self.tabs.addTab(self._add_tab(obj), obj.get_fullname())
         self.tabs.setCurrentIndex(last_tab)
 
 
@@ -398,13 +403,13 @@ class MainWidget(QWidget):
     def teacher_added(self, klasse, text, short):
         teacher = None
         name = None
-        for t in AllTeachers.teachers:
+        for t in self.mainwindow.allteachers.teachers:
             if t.short in text:
                 teacher = t
                 break
-        if not AllClasses.backup:
-            AllClasses.backup = AllClasses.classes.copy()
-        for c in AllClasses.classes:
+        if not self.mainwindow.allclasses.backup:
+            self.mainwindow.allclasses.backup = self.mainwindow.allclasses.classes.copy()
+        for c in self.mainwindow.allclasses.classes:
             if c == klasse:
                 for s in c.subjects:
                     if s != short:
@@ -419,15 +424,15 @@ class MainWidget(QWidget):
         CHANGED = True
 
     def _add_class(self):
-        add_class()
-        self._refresh()
+        add_c = AddClassPopUp('Klasse Hinzufügen', self)
+        add_c.setGeometry(100, 200, 500, 300)
+        add_c.show()
 
 
     def _add_teacher(self):
         add_t = AddTeacherPopUp('Lehrer Hinzufügen', self)
         add_t.setGeometry(100, 200, 500, 300)
         add_t.show()
-        self._refresh()
 
 
     def _refresh(self, name=None):

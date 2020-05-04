@@ -12,9 +12,10 @@ setup(
     url="https://github.com/lfreist/deputat",
     author='lfreist',
     author_email='freist.leon@gmx.de',
-    packages=['deputat', 'deputat/GUI', 'deputat/GUI/pictures/*.svg'],
+    packages=['deputat', 'deputat/GUI/', 'deputat/GUI/pictures/'],
     install_requires=[
               'PyQt5',
+              'distro'
               ],
     classifiers=[
         "Programming Language :: Python :: 3",

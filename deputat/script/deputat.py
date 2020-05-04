@@ -1,4 +1,11 @@
 import os
+import sys
+sys.path.append('../')
+try:
+    from deputat import settings
+except ImportError:
+    import settings
+
 
 # dictionary for subjects
 SUBJECT_LONG_DICT = {
@@ -13,13 +20,12 @@ SUBJECT_LONG_DICT = {
 # reversed dictionary for subjects
 SUBJECT_SHORT_DICT = {short: long for long, short in SUBJECT_LONG_DICT.items()}
 
-base_dir = os.path.split(os.getcwd())[0]
-data_dir = os.path.join(base_dir, 'backup_data')
+save = settings.save_dir()
 
 
 class Class:
     def __init__(self, level: int, name: str, subjects: dict):
-        self.level = level
+        self.level = int(level)
         self.name = name
         self.subjects = subjects
 
@@ -27,6 +33,22 @@ class Class:
     def __str__(self):
         return f'Klasse:\t {self.level}{self.name}\n' \
                f'Fächer:\t {self._get_subjects()}'
+
+    def __gt__(self, other):
+        if self.level == other.level:
+            return self.name > other.name
+        return self.level > other.level
+
+    def __lt__(self, other):
+        if self.level == other.level:
+            return self.name < other.name
+        return self.level < other.level
+
+    def __eq__(self, other):
+        return self.level == other.level and self.name == self.name
+
+    def __repr__(self):
+        return f'Class({self.level}, {self.name}, {self.subjects})'
 
 
     def list_it(self):
@@ -109,23 +131,22 @@ class Teacher:
         return self.hours - sum(teached_hours)
 
 
-
 class AllTeachers:
     teachers = []
     backup = []
-    filename = 'lehrer.csv'
+    filename = 'lehrer.td'
 
     def read_data(self, path, name=None, additional=False):
         if not additional:
             self.teachers = []
         if name:
             path, name = os.path.split(path)
-            build_data(name, path)
+            read_data(name, path)
         else:
-            build_data(self.filename, path)
+            read_data(path, 'td')
 
 
-    def save_data(self, location):
+    def save_data(self, location=save):
         save_data(self.filename, location)
 
 
@@ -150,26 +171,44 @@ class AllTeachers:
             if i.short == new.short:
                 return False
         self.teachers.append(new)
-        print(new)
         return True
 
 
 class AllClasses:
     classes = []
     backup = []
-    filename = 'klassen.csv'
+    filename = 'klassen.cd'
 
     def read_data(self, path, name=None, additional=False):
         if not additional:
             self.classes = []
         if name:
             path, name = os.path.split(path)
-            build_data(name, path)
+            liste = read_data(path, 'cd', name)
         else:
-            build_data(self.filename, path)
+            liste = read_data(path, 'cd')
+        print(liste)
+        for i in liste:
+            for c in self.classes:
+                if not c.get_fullname == i.get_fullname:
+                    self.classes.append(i)
 
-    def save_data(self, location):
+
+    def save_data(self, location=save):
         save_data(self.filename, location)
+
+
+    def list_levels(self):
+        liste = []
+        for c in self.classes:
+            if str(c.level) not in liste:
+                liste.append(str(c.level))
+        return liste
+
+    def add_class(self, level, name, subjects):
+        new = Class(level, name, subjects)
+        self.classes.append(new)
+        return True
 
 
 def _build_string_from_dict(subs: dict):
@@ -179,52 +218,55 @@ def _build_string_from_dict(subs: dict):
     return text[0:-2]
 
 
+def read_data(path, typ, filename=None):
+    if filename:
+        print(filename)
+        return
+    liste = []
+    for f in os.listdir(path):
+        if typ == 'cd':
+            if f.endswith('.cd'):
+                with open(os.path.join(path, f), 'r') as file:
+                    lines = file.readlines()[1:]
+                for line in lines:
+                    line = line.strip().split(',')
+                    line[-1] = line[-1].split(';')  # 'S-2-null'
+                    new = {}
+                    for fach in line[-1]:
+                        fach = fach.split('-')  # ['S', '2', 'null']
+                        fach[1] = int(fach[1])
+                        new[fach[0]] = fach[1:]
+                    line[-1] = new
+                    liste.append(build_object(line, typ))
+        elif typ == 'td':
+            if f.endswith('.td'):
+                with open(os.path.join(path, f), 'r') as file:
+                    lines = file.readlines()[1:]
+                for line in lines:
+                    line = line.strip().split(',')
+                    line[-1] = line[-1].split(';')
+                    liste.append(build_object(line, typ))
+    return liste
+
+
 def build_object(line: list, typ: str) -> bool:
-    if typ == 'lehrer.csv':
+    if typ == 'td':
         name, short, hours, subjects = line[0], line[1], int(line[2]), line[3]
-        new = Teacher(name, short, hours, subjects)
-        for t in AllTeachers.teachers:
-            if t.short == new.short:
-                print('skiped')
-                return False
-        AllTeachers.teachers.append(new)
-        return True
-    elif typ == 'klassen.csv':
+        return Teacher(name, short, hours, subjects)
+    elif typ == 'cd':
         level, name, subjects = line[0], line[1], line[2]
-        AllClasses.classes.append(Class(level, name, subjects))
-        return True
-    elif typ == 'fach':
-        return True
-    return False
+        return Class(level, name, subjects)
 
 
-def build_data(filename: str, path=data_dir):
-    with open(os.path.join(path, filename), 'r') as file:
-        lines = file.readlines()[1:]
-    for line in lines:
-        line = line.strip().split(',')
-        if filename == 'lehrer.csv':
-            line[-1] = line[-1].split(';')
-        elif filename == 'klassen.csv':
-            line[-1] = line[-1].split(';') # 'S-2-null'
-            new = {}
-            for fach in line[-1]:
-                fach = fach.split('-') # ['S', '2', 'null']
-                fach[1] = int(fach[1])
-                new[fach[0]] = fach[1:]
-            line[-1] = new
-        build_object(line, filename)
-
-
-def save_data(filename: str, path=data_dir):
+def save_data(filename, path=save):
     path = os.path.join(path, filename)
     try:
         file = open(path, 'w')
-        if filename == 'lehrer.csv':
+        if filename.endswith('.td'):
             print('name,kürzel,stunden,fächer', file=file)
             for obj in AllTeachers.teachers:
                 print(",".join(obj.list_it()), file=file)
-        elif filename == 'klassen.csv':
+        elif filename.endswith('.cd'):
             print('klassenstufe,name,fächer(fach-stundenzahl-lehrer)', file=file)
             for obj in AllClasses.classes:
                 print(",".join(obj.list_it()), file=file)
@@ -233,13 +275,6 @@ def save_data(filename: str, path=data_dir):
         print(error)
 
 
-def add_teacher():
-    print('teacher added')
-
-
-def add_class():
-    print('class added')
-
-
 if __name__ == '__main__':
-    AllTeachers().read_data(data_dir)
+    AllTeachers().read_data('/home/lfreist/Documents/projects/deputat/deputat/data')
+    AllClasses().read_data('/home/lfreist/Documents/projects/deputat/deputat/data')

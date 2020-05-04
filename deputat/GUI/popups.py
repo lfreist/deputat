@@ -1,15 +1,17 @@
-import os
-import sys
-from deputat import settings
+try:
+    from deputat import settings
+    from deputat.script.deputat import AllTeachers, AllClasses, Class, SUBJECT_LONG_DICT
+except ImportError:
+    import settings
+    from deputat import AllTeachers, AllClasses, Classes, SUBJECT_LONG_DICT
 
-sys.path.insert(1, settings.base_dir())
-
-from deputat.deputat import AllTeachers, SUBJECT_LONG_DICT
 
 from PyQt5.QtWidgets import (QDialog, QDialogButtonBox, QFormLayout, QGroupBox, QLabel,
-                             QLineEdit, QVBoxLayout, QMessageBox, QCheckBox, QSlider)
+                             QLineEdit, QVBoxLayout, QMessageBox, QCheckBox, QSlider,
+                             QSpinBox)
 
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIntValidator
 
 
 class AddTeacherPopUp(QDialog):
@@ -19,6 +21,7 @@ class AddTeacherPopUp(QDialog):
 
     def __init__(self, name, parent=None):
         super().__init__(parent)
+        self.mainwidget = parent
         self.create_form_GB()
 
         button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
@@ -49,8 +52,9 @@ class AddTeacherPopUp(QDialog):
         self.hours.setTickPosition(QSlider.TicksAbove)
         self.hours.setTickInterval(1)
         self.hours.valueChanged.connect(self.update_label)
-        self.hours_edit = QLineEdit()
+        self.hours_edit = QLineEdit('22')
         self.hours_edit.textChanged.connect(self.update_hours)
+        self.layout.addRow(QLabel('Anzahl Stunden:'), QLabel(''))
         self.layout.addRow(self.hours_edit, self.hours)
         self.formGroupBox.setLayout(self.layout)
 
@@ -77,6 +81,80 @@ class AddTeacherPopUp(QDialog):
         if not subs or not self.name.text() or not self.short.text() or not self.hours.value():
             return
         AllTeachers().add_teacher(self.name.text(), self.short.text(), int(self.hours.value()), subs)
+        self.mainwidget._refresh()
+        self.mainwidget.mainwindow.statusBar().showMessage(f'Lehrer {self.name.text()} hinzugefügt')
+        self.accept()
+
+
+class AddClassPopUp(QDialog):
+    icon_path = settings.icon_dir()
+    NumGridRows = 3
+    NumButtons = 4
+
+    def __init__(self, name, parent=None):
+        super().__init__(parent)
+        self.mainwidget = parent
+        self.create_form_GB()
+
+        button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        button_box.accepted.connect(self.add)
+        button_box.rejected.connect(self.reject)
+
+        main_layout = QVBoxLayout()
+        main_layout.addWidget(self.formGroupBox)
+        main_layout.addWidget(button_box)
+        self.setLayout(main_layout)
+
+        self.setWindowTitle(name)
+
+    def create_form_GB(self):
+        self.formGroupBox = QGroupBox("Informationen")
+        self.layout = QFormLayout()
+        self.level, self.name = QLineEdit(), QLineEdit()
+        self.level.setValidator(QIntValidator(1, 10))
+        self.level.textChanged.connect(self.is_valid)
+        self.name.textChanged.connect(self.is_valid)
+        self.layout.addRow(QLabel("Jahrgangsstufe:"), self.level)
+        self.layout.addRow(QLabel("Klassenname (a, b, etc.)"), self.name)
+        self.layout.addRow(QLabel("Fächer"), QLabel("Stunden"))
+        self.subjects = self.get_subjects()
+        for l, s in self.subjects:
+            self.layout.addRow(l, s)
+        self.formGroupBox.setLayout(self.layout)
+
+
+    def get_subjects(self):
+        liste = []
+        for s in SUBJECT_LONG_DICT:
+            label = QLabel(f'    {s}')
+            spin = QSpinBox()
+            spin.setValue(0)
+            spin.setMaximum(6)
+            spin.setMinimum(0)
+            liste.append((label, spin))
+        return liste
+
+
+    def is_valid(self):
+        if not self.level.text() or not self.name.text():
+            pass
+        for c in self.mainwidget.mainwindow.allclasses.classes:
+            if f'{c.level}{c.name}' == f'{self.level.text()}{self.name.text()}':
+                self.level.setStyleSheet('Background: red')
+
+
+    def add(self):
+        subs = {}
+        for i, o in enumerate(self.subjects):
+            hours = int(o[1].text())
+            name = o[0].text().strip()
+            if hours:
+                subs[SUBJECT_LONG_DICT[name]] = [hours, 'null']
+        if not subs or not self.name.text() or not self.level.text():
+            return
+        self.mainwidget.mainwindow.allclasses.add_class(int(self.level.text()), self.name.text(), subs)
+        self.mainwidget._refresh()
+        self.mainwidget.mainwindow.statusBar().showMessage(f'Klasse {self.level.text()}{self.name.text()} hinzugefügt')
         self.accept()
 
 
@@ -88,10 +166,8 @@ class QuitPopUp(QMessageBox):
         self.setIcon(QMessageBox.Warning)
         self.setText("Ohne speichern verlassen?")
         self.setWindowTitle("Exit")
-        self.setDetailedText("Es scheint, als wäre etwas verändert worden."
-                             "Wird nicht gespeichert, gehen alle Änderungen verloren!\n"
-                             "Diese Warnung kann jedoch auch fälschlicherweise angezeigt werden,"
-                             "wenn Sie Änderungen manuell rückgängig gemacht werden...")
+        self.setDetailedText("Diese Warnung kann jedoch auch fälschlicherweise angezeigt werden,"\
+                             "wenn Änderungen manuell rückgängig gemacht wurden...")
         self.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         self.setDefaultButton(QMessageBox.No)
 
