@@ -4,7 +4,7 @@
 # Deputat
 Einfaches graphisches Benutzer Interface (GUI) zur vergabe von Schulstunden.
 ____
-Aktuelle Version: 0.2.7 (beta)
+Aktuelle Version: 0.2.8 (beta)
 ____
 
 # Installation
@@ -13,6 +13,5 @@ ____
 in der Konsole ```python3 -m pip install deputat``` ein
 3. Starte deputat über ```python3 -m deputat```
 
-### Changes in 0.2.7
+### Changes in 0.2.8
 - added ```*.svg``` icons to ```sdist```
-- fixed ```import```-errors in PyPi-Package

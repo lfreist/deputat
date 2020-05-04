@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: deputat
-Version: 0.2.6
+Version: 0.2.7
 Summary: deputat overview
 Home-page: https://github.com/lfreist/deputat
 Author: lfreist
@@ -12,14 +12,18 @@ Description: ![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)
         # Deputat
         Einfaches graphisches Benutzer Interface (GUI) zur vergabe von Schulstunden.
         ____
-        Aktuelle Version: 0.2.3 (beta)
+        Aktuelle Version: 0.2.7 (beta)
         ____
         
         # Installation
         1. [Installiere python3](https://github.com/lfreist/deputat/blob/master/infos/install_python.md)
         2. Installiere deputat über pythons packetmanager [PyPi](https://pypi.org/). Gebe dazu
         in der Konsole ```python3 -m pip install deputat``` ein
-        3. Starte deputat über ```python3 -m app```
+        3. Starte deputat über ```python3 -m deputat```
+        
+        ### Changes in 0.2.7
+        - added ```*.svg``` icons to ```sdist```
+        - fixed ```import```-errors in PyPi-Package
         
 Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3

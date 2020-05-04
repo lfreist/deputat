@@ -5,14 +5,14 @@ with open("README.md", "r") as fh:
 
 setup(
     name='deputat',
-    version='0.2.7',
+    version='0.2.8',
     description='deputat overview',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/lfreist/deputat",
     author='lfreist',
     author_email='freist.leon@gmx.de',
-    packages=['deputat', r'deputat/GUI', r'deputat/GUI/pictures'],
+    packages=['deputat', r'deputat/GUI', r'deputat/GUI/pictures/*.svg'],
     install_requires=[
               'PyQt5',
               ],

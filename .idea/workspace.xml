@@ -3,15 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="29c63c6c-c14f-454c-bca9-7cbaa6f23efd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MANIFEST.in" beforeDir="false" afterPath="$PROJECT_DIR$/MANIFEST.in" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/deputat.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/PKG-INFO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/SOURCES.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat.egg-info/top_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/top_level.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/GUI/maingui.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/GUI/maingui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/GUI/popups.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/GUI/popups.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/run.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -191,7 +184,7 @@
       <workItem from="1588519506065" duration="385000" />
       <workItem from="1588522458024" duration="6617000" />
       <workItem from="1588578953272" duration="5606000" />
-      <workItem from="1588585880523" duration="2538000" />
+      <workItem from="1588585880523" duration="3008000" />
     </task>
     <servers />
   </component>
