@@ -12,7 +12,7 @@ setup(
     url="https://github.com/lfreist/deputat",
     author='lfreist',
     author_email='freist.leon@gmx.de',
-    packages=['deputat'],
+    packages=['deputat', r'deputat/GUI', r'deputat/GUI/pictures'],
     install_requires=[
               'PyQt5',
               ],
