@@ -1,10 +1,10 @@
 import os
 import sys
-import settings
+from deputat import settings
 
 sys.path.insert(1, settings.base_dir())
 
-from deputat import AllTeachers, SUBJECT_LONG_DICT
+from deputat.deputat import AllTeachers, SUBJECT_LONG_DICT
 
 from PyQt5.QtWidgets import (QDialog, QDialogButtonBox, QFormLayout, QGroupBox, QLabel,
                              QLineEdit, QVBoxLayout, QMessageBox, QCheckBox, QSlider)

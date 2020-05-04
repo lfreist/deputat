@@ -1,11 +1,11 @@
 import os
 import sys
-import settings
+from deputat import settings
 
 sys.path.insert(1, settings.base_dir())
 
-from deputat import AllTeachers, AllClasses, SUBJECT_SHORT_DICT, add_class
-from GUI.popups import AddTeacherPopUp, QuitPopUp
+from deputat.deputat import AllTeachers, AllClasses, SUBJECT_SHORT_DICT, add_class
+from deputat.GUI.popups import AddTeacherPopUp, QuitPopUp
 
 from PyQt5.QtWidgets import (QMainWindow, QApplication, QGroupBox, QHBoxLayout,
                              QLabel, QPushButton, QVBoxLayout, QWidget, QTabWidget,

@@ -1,3 +1,3 @@
 include ./deputat/GUI/*
-include ./deputat/GUI/pictures/*
+include ./deputat/GUI/pictures/*.svg
 include MANIFEST.in
