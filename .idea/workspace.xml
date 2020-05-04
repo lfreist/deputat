@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="29c63c6c-c14f-454c-bca9-7cbaa6f23efd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/deputat.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/PKG-INFO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/SOURCES.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/deputat-0.2.3.tar.gz" beforeDir="false" afterPath="$PROJECT_DIR$/dist/deputat-0.2.3.tar.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -184,7 +182,7 @@
       <workItem from="1588519506065" duration="385000" />
       <workItem from="1588522458024" duration="6617000" />
       <workItem from="1588578953272" duration="5606000" />
-      <workItem from="1588585880523" duration="346000" />
+      <workItem from="1588585880523" duration="1147000" />
     </task>
     <servers />
   </component>
@@ -192,10 +190,10 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="697" y="354" width="582" height="396" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588522906262">
+    <state x="697" y="354" width="618" height="396" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588586928036">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="697" y="354" width="582" height="396" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1588522906262" />
+    <state x="697" y="354" width="618" height="396" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1588586928036" />
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1588427776108">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
