@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="29c63c6c-c14f-454c-bca9-7cbaa6f23efd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/PKG-INFO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/SOURCES.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat.egg-info/requires.txt" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/requires.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -190,7 +186,7 @@
       <workItem from="1588595032882" duration="8315000" />
       <workItem from="1588609161114" duration="9017000" />
       <workItem from="1588664199761" duration="18024000" />
-      <workItem from="1588707485626" duration="64000" />
+      <workItem from="1588707485626" duration="123000" />
     </task>
     <servers />
   </component>
