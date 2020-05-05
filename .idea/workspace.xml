@@ -3,10 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="29c63c6c-c14f-454c-bca9-7cbaa6f23efd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/GUI/maingui.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/GUI/maingui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/GUI/popups.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/GUI/popups.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/script/deputat.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/script/deputat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deputat.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/PKG-INFO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deputat.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/SOURCES.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deputat.egg-info/requires.txt" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/requires.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,6 +50,9 @@
       <module name="deputat" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/deputat" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -70,6 +72,9 @@
       <module name="deputat" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/deputat/script" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -184,7 +189,8 @@
       <workItem from="1588585880523" duration="5856000" />
       <workItem from="1588595032882" duration="8315000" />
       <workItem from="1588609161114" duration="9017000" />
-      <workItem from="1588664199761" duration="16838000" />
+      <workItem from="1588664199761" duration="18024000" />
+      <workItem from="1588707485626" duration="64000" />
     </task>
     <servers />
   </component>

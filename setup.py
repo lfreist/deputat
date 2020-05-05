@@ -12,8 +12,8 @@ setup(
     url="https://github.com/lfreist/deputat",
     author='lfreist',
     author_email='freist.leon@gmx.de',
-    packages=['deputat', 'deputat/GUI/', 'deputat/GUI/pictures/'],
-    package_dir={'deputat': ['GUI/pictures/*.svg']},
+    packages=['deputat', 'deputat/GUI/', 'deputat/GUI/pictures/', 'deputat/script/'],
+    package_data={'deputat': ['GUI/pictures/*.svg']},
     install_requires=[
               'PyQt5',
               'distro',
