@@ -4,7 +4,7 @@
 # Deputat
 Einfaches graphisches Benutzer Interface (GUI) zur vergabe von Schulstunden.
 ____
-Aktuelle Version: 0.2.8 (beta)
+Aktuelle Version: 1.0.0
 ____
 
 # Installation
@@ -15,3 +15,4 @@ in der Konsole ```python3 -m pip install deputat``` ein
 
 ### Changes in 0.2.8
 - added ```*.svg``` icons to ```sdist```
+- data can now be exported as ```*.csv``` or ```*.xlsx```

@@ -1,5 +1,6 @@
 import os
 import sys
+import pandas as pd
 sys.path.append('../')
 try:
     from deputat import settings
@@ -45,11 +46,10 @@ class Class:
         return self.level < other.level
 
     def __eq__(self, other):
-        return self.level == other.level and self.name == self.name
+        return self.name == other.name and self.level == other.level
 
     def __repr__(self):
         return f'Class({self.level}, {self.name}, {self.subjects})'
-
 
     def list_it(self):
         return [self.level, self.name, ';'.join(self.subjects_to_list())]
@@ -118,6 +118,18 @@ class Teacher:
         return f'Teacher({self.name}, {self.short}, {self.hours}, {self.subjects})'
 
 
+    def __eq__(self, other):
+        return self.name == other.name and self.short == other.short
+
+
+    def __lt__(self, other):
+        return self.short < other.short
+
+
+    def __gt__(self, other):
+        return self.short > other.short
+
+
     def list_it(self):
         return [self.name, self.short, str(self.hours), ';'.join(self.subjects)]
 
@@ -136,14 +148,14 @@ class AllTeachers:
     backup = []
     filename = 'lehrer.td'
 
-    def read_data(self, path, name=None, additional=False):
-        if not additional:
-            self.teachers = []
-        if name:
-            path, name = os.path.split(path)
-            read_data(name, path)
+    def read_data(self, path, file=None):
+        if file:
+            path, file = os.path.split(path)
+            liste = read_data(path, 'td', file)
         else:
-            read_data(path, 'td')
+            liste = read_data(path, 'td')
+        for i in liste:
+            self.add_teacher(i)
 
 
     def save_data(self, location=save):
@@ -165,13 +177,21 @@ class AllTeachers:
         return list
 
 
-    def add_teacher(self, name, short, hours, subjects):
-        new = Teacher(name, short, hours, subjects)
-        for i in self.teachers:
-            if i.short == new.short:
-                return False
-        self.teachers.append(new)
+    def add_teacher(self, teacher=None, name=None, short=None, hours=None, subjects=None):
+        if not teacher:
+            teacher = Teacher(name, short, hours, subjects)
+        if teacher in self.teachers:
+            return False
+        self.teachers.append(teacher)
         return True
+
+
+    def get_all_teachers(self) -> list:
+        liste = []
+        for t in self.teachers:
+            if t.short not in liste:
+                liste.append(t.short)
+        return liste
 
 
 class AllClasses:
@@ -179,19 +199,14 @@ class AllClasses:
     backup = []
     filename = 'klassen.cd'
 
-    def read_data(self, path, name=None, additional=False):
-        if not additional:
-            self.classes = []
-        if name:
-            path, name = os.path.split(path)
-            liste = read_data(path, 'cd', name)
+    def read_data(self, path, file=None):
+        if file:
+            path, file = os.path.split(path)
+            liste = read_data(path, 'cd', file)
         else:
             liste = read_data(path, 'cd')
-        print(liste)
         for i in liste:
-            for c in self.classes:
-                if not c.get_fullname == i.get_fullname:
-                    self.classes.append(i)
+            self.add_class(i)
 
 
     def save_data(self, location=save):
@@ -205,10 +220,31 @@ class AllClasses:
                 liste.append(str(c.level))
         return liste
 
-    def add_class(self, level, name, subjects):
-        new = Class(level, name, subjects)
-        self.classes.append(new)
+
+    def add_class(self, klasse=None, level=None, name=None, subjects=None):
+        if not klasse:
+            klasse = Class(level, name, subjects)
+        if klasse in self.classes:
+            return False
+        self.classes.append(klasse)
         return True
+
+
+    def get_all_subjects(self) -> list:
+        list = []
+        for c in self.classes:
+            for s in c.subjects:
+                if s not in list:
+                    list.append(s)
+        return list
+
+
+    def get_all_classes(self) -> list:
+        liste = []
+        for c in self.classes:
+            if c.get_fullname() not in liste:
+                liste.append(c.get_fullname())
+        return liste
 
 
 def _build_string_from_dict(subs: dict):
@@ -219,10 +255,28 @@ def _build_string_from_dict(subs: dict):
 
 
 def read_data(path, typ, filename=None):
-    if filename:
-        print(filename)
-        return
     liste = []
+    if filename:
+        if typ == 'cd':
+            with open(os.path.join(path, filename), 'r') as file:
+                lines = file.readlines()[1:]
+            for line in lines:
+                line = line.strip().split(',')
+                line[-1] = line[-1].split(';')  # 'S-2-null'
+                new = {}
+                for fach in line[-1]:
+                    fach = fach.split('-')  # ['S', '2', 'null']
+                    fach[1] = int(fach[1])
+                    new[fach[0]] = fach[1:]
+                line[-1] = new
+                liste.append(build_object(line, typ))
+        elif typ == 'td':
+            with open(os.path.join(path, filename), 'r') as file:
+                lines = file.readlines()[1:]
+            for line in lines:
+                line = line.strip().split(',')
+                line[-1] = line[-1].split(';')
+                liste.append(build_object(line, typ))
     for f in os.listdir(path):
         if typ == 'cd':
             if f.endswith('.cd'):
@@ -269,12 +323,77 @@ def save_data(filename, path=save):
         elif filename.endswith('.cd'):
             print('klassenstufe,name,fächer(fach-stundenzahl-lehrer)', file=file)
             for obj in AllClasses.classes:
-                print(",".join(obj.list_it()), file=file)
+                print(",".join([str(i) for i in obj.list_it()]), file=file)
         file.close()
     except TypeError as error:
         print(error)
 
 
+def pretty_out_teachers(classes: AllClasses, teachers: AllTeachers):
+    s_dict = {'Fächer': sorted(classes.get_all_subjects())}
+    teachers_list = sorted(teachers.get_all_teachers())
+    ret_df = pd.DataFrame(s_dict)
+    t_dict = {}
+    for t in sorted(teachers.teachers):
+        infos = get_teachers_classes(classes, t)
+        infos_list = sorted(infos)
+        subs = [infos[i] for i in infos_list]
+        subs = [f'{format_subs(i)}' for i in subs]
+        t_dict[t.short] = subs
+    for i in t_dict:
+        ret_df[i] = t_dict[i]
+    return ret_df
+
+
+def format_subs(xs: list) -> str:
+    hours = ''
+    classes = ''
+    if xs[0] == 0:
+        return ''
+    return f'{str(xs[0])} - {xs[1][:-2]}'
+
+
+def pretty_out_classes(classes: AllClasses):
+    all_subs = sorted(classes.get_all_subjects())
+    s_dict = {'Fächer': all_subs}
+    ret_df = pd.DataFrame(s_dict)
+    c_dict = {}
+    for c in sorted(classes.classes):
+        info_dict = {}
+        for s in all_subs:
+            info_dict[s] = [0, 'null']
+        for s in info_dict:
+            if s in c.subjects:
+                info_dict[s] = c.subjects[s]
+        infos_list = sorted(info_dict)
+        infos = [info_dict[i] for i in infos_list]
+        infos = [f'{format_info(i)}' for i in infos]
+        c_dict[c.get_fullname()] = infos
+    for i in c_dict:
+        ret_df[i] = c_dict[i]
+    return ret_df
+
+
+def format_info(xs: list) -> str:
+    if xs[0] == 0:
+        return ''
+    return f'{xs[0]} - {xs[1]}'
+
+
+def get_teachers_classes(classes: AllClasses, teacher: Teacher):
+    ret_dict = {}
+    for s in sorted(classes.get_all_subjects()):
+        ret_dict[s] = [0, '']
+    for c in sorted(classes.classes):
+        for s in c.subjects:
+            if c.subjects[s][1] == teacher.short:
+                ret_dict[s][0] += c.subjects[s][0]
+                ret_dict[s][1] += f'{c.get_fullname()}, '
+    return ret_dict
+
+
 if __name__ == '__main__':
-    AllTeachers().read_data('/home/lfreist/Documents/projects/deputat/deputat/data')
-    AllClasses().read_data('/home/lfreist/Documents/projects/deputat/deputat/data')
+    t = AllTeachers()
+    t.read_data('/home/lfreist/Documents/projects/deputat/deputat/data')
+    c = AllClasses()
+    c.read_data('/home/lfreist/Documents/projects/deputat/deputat/data')

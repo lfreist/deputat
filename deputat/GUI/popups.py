@@ -80,7 +80,7 @@ class AddTeacherPopUp(QDialog):
                 subs.append(SUBJECT_LONG_DICT[o])
         if not subs or not self.name.text() or not self.short.text() or not self.hours.value():
             return
-        AllTeachers().add_teacher(self.name.text(), self.short.text(), int(self.hours.value()), subs)
+        self.mainwidget.mainwindow.allteachers.add_teacher(None, self.name.text(), self.short.text(), int(self.hours.value()), subs)
         self.mainwidget._refresh()
         self.mainwidget.mainwindow.statusBar().showMessage(f'Lehrer {self.name.text()} hinzugefügt')
         self.accept()
@@ -152,7 +152,7 @@ class AddClassPopUp(QDialog):
                 subs[SUBJECT_LONG_DICT[name]] = [hours, 'null']
         if not subs or not self.name.text() or not self.level.text():
             return
-        self.mainwidget.mainwindow.allclasses.add_class(int(self.level.text()), self.name.text(), subs)
+        self.mainwidget.mainwindow.allclasses.add_class(None, int(self.level.text()), self.name.text(), subs)
         self.mainwidget._refresh()
         self.mainwidget.mainwindow.statusBar().showMessage(f'Klasse {self.level.text()}{self.name.text()} hinzugefügt')
         self.accept()

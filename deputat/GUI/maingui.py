@@ -1,12 +1,15 @@
 import os
+import pandas
 
 try:
     from deputat import settings
-    from deputat.script.deputat import AllTeachers, AllClasses, SUBJECT_SHORT_DICT, add_class
+    from deputat.script.deputat import (AllTeachers, AllClasses, SUBJECT_SHORT_DICT, add_class,
+                                        pretty_out_teachers, pretty_out_classes)
     from deputat.GUI.popups import AddTeacherPopUp, AddClassPopUp, QuitPopUp
 except ImportError:
     import settings
-    from script.deputat import AllTeachers, AllClasses, SUBJECT_SHORT_DICT
+    from script.deputat import (AllTeachers, AllClasses, SUBJECT_SHORT_DICT, pretty_out_teachers,
+                                pretty_out_classes)
     from GUI.popups import AddTeacherPopUp, AddClassPopUp, QuitPopUp
 
 from PyQt5.QtWidgets import (QMainWindow, QApplication, QGroupBox, QHBoxLayout,
@@ -22,12 +25,15 @@ CHANGED = False
 
 class MainWindow(QMainWindow):
     icon_path = settings.icon_dir()
-    location = ''
+    location = os.getenv('HOME')
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.allclasses = AllClasses()
         self.allteachers = AllTeachers()
+        if os.path.exists(settings.save_dir()):
+            self.allclasses.read_data(settings.save_dir())
+            self.allteachers.read_data(settings.save_dir())
 
         title = 'Deputat - Übersicht'
         icon = os.path.join(self.icon_path, 'deputat.svg')
@@ -36,7 +42,7 @@ class MainWindow(QMainWindow):
         self.setGeometry(200, 200, 1250, 500)
 
         self._build_menu()
-        self.statusBar().showMessage('test')
+        self.statusBar().showMessage('')
 
         self.main_widget = MainWidget(self)
         self.setCentralWidget(self.main_widget)
@@ -64,7 +70,17 @@ class MainWindow(QMainWindow):
         load.addAction(import_class)
 
         export = file.addMenu(QIcon(os.path.join(self.icon_path, 'export.svg')), 'Exportieren')
-        export.addAction(QAction(QIcon(os.path.join(self.icon_path, 'csv.svg')), 'als .csv', self))
+        export_xlsx = QAction(QIcon(os.path.join(self.icon_path, 'excel.svg')), 'Exportieren als .xlsx', self)
+        export_csv = export.addMenu(QIcon(os.path.join(self.icon_path, 'csv.svg')), 'Exportieren als .csv')
+        export_csv_teacher = QAction(QIcon(os.path.join(self.icon_path, 'add_teacher.svg')), 'Lehrer exportieren', self)
+        export_csv_classes = QAction(QIcon(os.path.join(self.icon_path, 'add_teacher.svg')), 'Klassen exportieren', self)
+        export_xlsx.triggered.connect(self._export_xlsx)
+        export_csv_teacher.triggered.connect(self._export_teachers)
+        export_csv_classes.triggered.connect(self._export_classes)
+
+        export_csv.addAction(export_csv_teacher)
+        export_csv.addAction(export_csv_classes)
+        export.addAction(export_xlsx)
         file.addSeparator()
 
         file.addAction(QAction(QIcon(os.path.join(self.icon_path, 'exit.svg')), "Quit", self))
@@ -98,24 +114,20 @@ class MainWindow(QMainWindow):
         self.allclasses.read_data(path)
         self.allteachers.read_data(path)
         self.main_widget._refresh(self.main_widget)
-        print(self.allclasses.classes)
-        print(self.allteachers.teachers)
 
 
     def _import_teacher(self):
-        path = QFileDialog.getOpenFileName(self, 'Odner wählen')[0]
-        if not self.location:
-            self.location = path
-        self.allteachers.read_data(path, True, additional=True)
+        path = QFileDialog.getOpenFileName(self, 'Lehrer wählen', self.location, "td-files (*.td)")[0]
+        self.location = path
+        self.allteachers.read_data(path, file=True)
         self.main_widget._refresh(self.main_widget)
         self.statusBar().showMessage(f'{os.path.split(path)[1]} importiert')
 
 
     def _import_class(self):
-        path = QFileDialog.getOpenFileName(self, 'Odner wählen')[0]
-        if not self.location:
-            self.location = path
-        self.allclasses.read_data(path, True, additional=True)
+        path = QFileDialog().getOpenFileName(self, 'Klasse wählen', self.location, "cd-files (*.cd)")[0]
+        self.location = path
+        self.allclasses.read_data(path, file=True)
         self.main_widget._refresh(self.main_widget)
         self.statusBar().showMessage(f'{os.path.split(path)[1]} importiert')
 
@@ -131,12 +143,41 @@ class MainWindow(QMainWindow):
             self.statusBar().showMessage('speichern nicht erfolgreich!')
 
 
+    def _export_classes(self):
+        path = QFileDialog.getSaveFileName(self, 'File wählen', self.location, "csv-files (*.csv)")[0]
+        to_save = pretty_out_classes(self.allclasses)
+        to_save.to_csv(path, sep=',', index=False)
+        self.statusBar().showMessage(f'{os.path.split(path)[1]} erfolgreich exportiert')
+
+
+    def _export_teachers(self):
+        path = QFileDialog.getSaveFileName(self, 'File wählen', self.location, "csv-files (*.csv)")[0]
+        to_save = pretty_out_teachers(self.allclasses, self.allteachers)
+        to_save.to_csv(path, sep=',', index=False)
+        self.statusBar().showMessage(f'{os.path.split(path)[1]} erfolgreich exportiert')
+
+
+    def _export_xlsx(self):
+        import pandas as pd
+        path = QFileDialog.getSaveFileName(self, 'File wählen', self.location, "excel-files (*.xlsx)")[0]
+        lehrer = pretty_out_teachers(self.allclasses, self.allteachers)
+        klasse = pretty_out_classes(self.allclasses)
+        writer = pd.ExcelWriter(path)
+        lehrer.to_excel(writer, 'Lehrer', index=False)
+        klasse.to_excel(writer, 'Klassen', index=False)
+        writer.save()
+        self.statusBar().showMessage(f'{os.path.split(path)[1]} erfolgreich exportiert')
+
+
+
 class MainWidget(QWidget):
     icon_path = settings.icon_dir()
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.mainwindow = parent
+
+        self.last_tab = 0
 
         # ----------------create GroupBoxes-------------
         self.createTLGB()
@@ -314,7 +355,7 @@ class MainWidget(QWidget):
             if t.name == name:
                 text = str(t)
         if name == 'Lehrkraft auswählen':
-            self.info.setText('Keine Lehrkraft ausgewählt')
+            self.info.setText('')
         else:
             self.info.setText(text)
         if t_name:
@@ -370,13 +411,14 @@ class MainWidget(QWidget):
 
 
     def _list_tabs(self, classes):
-        last_tab = self.tabs.currentIndex()
+        if self.tabs.currentIndex() != -1:
+            self.last_tab = self.tabs.currentIndex()
         for i in list(range(self.tabs.count()))[::-1]:
             self.tabs.removeTab(i)
         liste = sorted([obj for obj in classes])
         for obj in liste:
             self.tabs.addTab(self._add_tab(obj), obj.get_fullname())
-        self.tabs.setCurrentIndex(last_tab)
+        self.tabs.setCurrentIndex(self.last_tab)
 
 
     def _class_info_item(self, short: str, info: list, obj):

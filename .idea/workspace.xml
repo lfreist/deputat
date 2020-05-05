@@ -3,16 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="29c63c6c-c14f-454c-bca9-7cbaa6f23efd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/SOURCES.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat.egg-info/top_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/top_level.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/deputat/GUI/maingui.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/GUI/maingui.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/deputat/GUI/popups.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/GUI/popups.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/data/klassen.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/data/lehrer.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/deputat.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/script/deputat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deputat/script/deputat.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/script/deputat.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -189,7 +183,8 @@
       <workItem from="1588578953272" duration="5606000" />
       <workItem from="1588585880523" duration="5856000" />
       <workItem from="1588595032882" duration="8315000" />
-      <workItem from="1588609161114" duration="8808000" />
+      <workItem from="1588609161114" duration="9017000" />
+      <workItem from="1588664199761" duration="16838000" />
     </task>
     <servers />
   </component>
@@ -198,6 +193,16 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.cd" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="WindowStateProjectService">
     <state x="697" y="354" width="618" height="396" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588586928036">
