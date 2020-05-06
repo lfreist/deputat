@@ -4,8 +4,8 @@
 # Deputat
 Einfaches graphisches Benutzer Interface (GUI) zur vergabe von Schulstunden.
 ____
-Aktuelle Version: 1.0.4
-### Changes in 1.0.4
+Aktuelle Version: 1.0.5
+### Changes in 1.0.5
 - added ```*.svg``` icons to ```sdist```
 - data can now be exported as ```*.csv``` or ```*.xlsx```
 - fixed ```import``` errors

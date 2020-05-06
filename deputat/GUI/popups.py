@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import (QDialog, QDialogButtonBox, QFormLayout, QGroupBox, 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIntValidator
 
-import deputat import settings
+from deputat import settings
 from deputat.script.deputat import AllTeachers, AllClasses, Class, SUBJECT_LONG_DICT
 
 
