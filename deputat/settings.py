@@ -19,8 +19,8 @@ def get_os():
 
 def save_dir():
     home = os.getenv('HOME')
-    data = os.path.join(home, 'deputat', 'data')
+    data = os.path.join(home, 'deputat_data', 'data')
     if not os.path.exists(data):
-        os.mkdir(os.path.join(home, 'deputat'))
+        os.mkdir(os.path.join(home, 'deputat_data'))
         os.mkdir(data)
     return data

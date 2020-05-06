@@ -1,11 +1,10 @@
 import os
 import sys
 import pandas as pd
+
 sys.path.append('../')
-try:
-    from deputat import settings
-except ImportError:
-    import settings
+
+import settings
 
 
 # dictionary for subjects

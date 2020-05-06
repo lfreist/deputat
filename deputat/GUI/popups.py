@@ -1,10 +1,4 @@
-try:
-    from deputat import settings
-    from deputat.script.deputat import AllTeachers, AllClasses, Class, SUBJECT_LONG_DICT
-except ImportError:
-    import settings
-    from deputat import AllTeachers, AllClasses, Classes, SUBJECT_LONG_DICT
-
+import sys
 
 from PyQt5.QtWidgets import (QDialog, QDialogButtonBox, QFormLayout, QGroupBox, QLabel,
                              QLineEdit, QVBoxLayout, QMessageBox, QCheckBox, QSlider,
@@ -12,6 +6,11 @@ from PyQt5.QtWidgets import (QDialog, QDialogButtonBox, QFormLayout, QGroupBox, 
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIntValidator
+
+sys.path.append('../')
+
+import settings
+from script.deputat import AllTeachers, AllClasses, Class, SUBJECT_LONG_DICT
 
 
 class AddTeacherPopUp(QDialog):
@@ -83,6 +82,7 @@ class AddTeacherPopUp(QDialog):
         self.mainwidget.mainwindow.allteachers.add_teacher(None, self.name.text(), self.short.text(), int(self.hours.value()), subs)
         self.mainwidget._refresh()
         self.mainwidget.mainwindow.statusBar().showMessage(f'Lehrer {self.name.text()} hinzugefügt')
+        self.mainwidget.mainwindow.changed = True
         self.accept()
 
 
@@ -94,6 +94,9 @@ class AddClassPopUp(QDialog):
     def __init__(self, name, parent=None):
         super().__init__(parent)
         self.mainwidget = parent
+        
+        self.valid = False
+        
         self.create_form_GB()
 
         button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
@@ -141,6 +144,10 @@ class AddClassPopUp(QDialog):
         for c in self.mainwidget.mainwindow.allclasses.classes:
             if f'{c.level}{c.name}' == f'{self.level.text()}{self.name.text()}':
                 self.level.setStyleSheet('Background: red')
+                self.valid = False
+                return
+        self.level.setStyleSheet('Background: white')
+        self.valid = True
 
 
     def add(self):
@@ -150,11 +157,12 @@ class AddClassPopUp(QDialog):
             name = o[0].text().strip()
             if hours:
                 subs[SUBJECT_LONG_DICT[name]] = [hours, 'null']
-        if not subs or not self.name.text() or not self.level.text():
+        if not subs or not self.name.text() or not self.level.text() or not self.valid:
             return
         self.mainwidget.mainwindow.allclasses.add_class(None, int(self.level.text()), self.name.text(), subs)
         self.mainwidget._refresh()
         self.mainwidget.mainwindow.statusBar().showMessage(f'Klasse {self.level.text()}{self.name.text()} hinzugefügt')
+        self.mainwidget.mainwindow.changed = True
         self.accept()
 
 
@@ -166,7 +174,7 @@ class QuitPopUp(QMessageBox):
         self.setIcon(QMessageBox.Warning)
         self.setText("Ohne speichern verlassen?")
         self.setWindowTitle("Exit")
-        self.setDetailedText("Diese Warnung kann jedoch auch fälschlicherweise angezeigt werden,"\
+        self.setDetailedText("Diese Warnung kann fälschlicherweise angezeigt werden,"\
                              "wenn Änderungen manuell rückgängig gemacht wurden...")
         self.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         self.setDefaultButton(QMessageBox.No)

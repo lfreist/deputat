@@ -1,26 +1,17 @@
 import os
+import sys
 import pandas
-
-try:
-    from deputat import settings
-    from deputat.script.deputat import (AllTeachers, AllClasses, SUBJECT_SHORT_DICT, add_class,
-                                        pretty_out_teachers, pretty_out_classes)
-    from deputat.GUI.popups import AddTeacherPopUp, AddClassPopUp, QuitPopUp
-except ImportError:
-    import settings
-    from script.deputat import (AllTeachers, AllClasses, SUBJECT_SHORT_DICT, pretty_out_teachers,
-                                pretty_out_classes)
-    from GUI.popups import AddTeacherPopUp, AddClassPopUp, QuitPopUp
-
 from PyQt5.QtWidgets import (QMainWindow, QApplication, QGroupBox, QHBoxLayout,
                              QLabel, QPushButton, QVBoxLayout, QWidget, QTabWidget,
-                             QComboBox, QCheckBox, QListWidget, QAction, QFileDialog,
-                             QFileSystemModel, QTreeView)
-
+                             QComboBox, QCheckBox, QListWidget, QAction, QFileDialog)
 from PyQt5.QtGui import QIcon
 
+sys.path.append('../')
 
-CHANGED = False
+import settings
+from script.deputat import (AllTeachers, AllClasses, SUBJECT_SHORT_DICT,
+                            pretty_out_classes, pretty_out_teachers)
+from GUI.popups import AddTeacherPopUp, AddClassPopUp, QuitPopUp
 
 
 class MainWindow(QMainWindow):
@@ -29,6 +20,7 @@ class MainWindow(QMainWindow):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.changed = False
         self.allclasses = AllClasses()
         self.allteachers = AllTeachers()
         if os.path.exists(settings.save_dir()):
@@ -97,7 +89,7 @@ class MainWindow(QMainWindow):
 
 
     def closeEvent(self, event):
-        if CHANGED:
+        if self.changed:
             close = QuitPopUp('exit').get()
             if close:
                 event.accept()
@@ -113,7 +105,7 @@ class MainWindow(QMainWindow):
             self.location = path
         self.allclasses.read_data(path)
         self.allteachers.read_data(path)
-        self.main_widget._refresh(self.main_widget)
+        self.main_widget._refresh()
 
 
     def _import_teacher(self):
@@ -135,8 +127,7 @@ class MainWindow(QMainWindow):
     def _save(self):
         a = self.allclasses.save_data()
         b = self.allteachers.save_data()
-        global CHANGED
-        CHANGED = False
+        self.changed = False
         if a and b:
             self.statusBar().showMessage('erfolgreich gespeichert')
         else:
@@ -178,6 +169,7 @@ class MainWidget(QWidget):
         self.mainwindow = parent
 
         self.last_tab = 0
+        self.last_name = None # for showing teacher in searchbar after adding teacher to class
 
         # ----------------create GroupBoxes-------------
         self.createTLGB()
@@ -309,7 +301,7 @@ class MainWidget(QWidget):
         layout = QVBoxLayout()
         top = QHBoxLayout()
         self.searchbar = QComboBox()
-        self.fill_combo_teacher()
+        self.fill_combo_teacher_search()
         top.addWidget(self.searchbar)
 
         self.selected = self._selected_teacher()
@@ -344,11 +336,11 @@ class MainWidget(QWidget):
     def _selected_teacher(self):
         selected = QHBoxLayout()
         self.info = QLabel('')
-        selected.addWidget(self.info) #TODO: add proper widgets
+        selected.addWidget(self.info)
         return selected
 
 
-    def _changed_search(self, t_name=None):
+    def _changed_search(self):
         name = self.searchbar.currentText()
         text = ''
         for t in self.mainwindow.allteachers.teachers:
@@ -358,10 +350,10 @@ class MainWidget(QWidget):
             self.info.setText('')
         else:
             self.info.setText(text)
-        if t_name:
+        if self.last_name:
             for t in self.mainwindow.allteachers.teachers:
-                if t.name == t_name:
-                    self.searchbar.setCurrentText(t_name)
+                if t.name == self.last_name:
+                    self.searchbar.setCurrentText(self.last_name)
                     break
 
 
@@ -461,9 +453,9 @@ class MainWidget(QWidget):
                         name = teacher.name
                     except AttributeError:
                         c.subjects[s][1] = 'null'
-        self._refresh(name)
-        global CHANGED
-        CHANGED = True
+        self.last_name = name
+        self._refresh()
+        self.mainwindow.changed = True
 
     def _add_class(self):
         add_c = AddClassPopUp('Klasse Hinzufügen', self)
@@ -477,8 +469,8 @@ class MainWidget(QWidget):
         add_t.show()
 
 
-    def _refresh(self, name=None):
-        self._changed_search(name)
+    def _refresh(self):
+        self._changed_search()
         self._search_classes()
         self._build_teacher_list()
         self.fill_combo_teacher()

@@ -1,7 +1,4 @@
-try:
-    from deputat.GUI import maingui
-except ImportError:
-    from GUI import maingui
+from GUI import maingui
 
 
 def run_gui():

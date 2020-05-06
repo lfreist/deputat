@@ -4,15 +4,16 @@
 # Deputat
 Einfaches graphisches Benutzer Interface (GUI) zur vergabe von Schulstunden.
 ____
-Aktuelle Version: 1.0.0
+Aktuelle Version: 1.0.2
+### Changes in 1.0.2
+- added ```*.svg``` icons to ```sdist```
+- data can now be exported as ```*.csv``` or ```*.xlsx```
+- fixed ```import``` errors
+- changed default data location to ```/home/user/deputat_data/data/```
 ____
 
-# Installation
+# Installation und Starten von deputat
 1. [Installiere python3](https://github.com/lfreist/deputat/blob/master/infos/install_python.md)
 2. Installiere deputat über pythons packetmanager [PyPi](https://pypi.org/). Gebe dazu
 in der Konsole ```python3 -m pip install deputat``` ein
 3. Starte deputat über ```python3 -m deputat```
-
-### Changes in 0.2.8
-- added ```*.svg``` icons to ```sdist```
-- data can now be exported as ```*.csv``` or ```*.xlsx```

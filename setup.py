@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='deputat',
-    version='1.0.1',
+    version='1.0.2',
     description='deputat overview',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -17,7 +17,8 @@ setup(
     install_requires=[
               'PyQt5',
               'distro',
-              'openpyxl'
+              'openpyxl',
+              'pandas'
               ],
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -25,4 +26,3 @@ setup(
         "Operating System :: OS Independent",
         ],
 )
-
