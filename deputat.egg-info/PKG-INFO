@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: deputat
-Version: 1.0.2
+Version: 1.0.3
 Summary: deputat overview
 Home-page: https://github.com/lfreist/deputat
 Author: lfreist
@@ -12,8 +12,8 @@ Description: ![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)
         # Deputat
         Einfaches graphisches Benutzer Interface (GUI) zur vergabe von Schulstunden.
         ____
-        Aktuelle Version: 1.0.2
-        ### Changes in 1.0.2
+        Aktuelle Version: 1.0.3
+        ### Changes in 1.0.3
         - added ```*.svg``` icons to ```sdist```
         - data can now be exported as ```*.csv``` or ```*.xlsx```
         - fixed ```import``` errors

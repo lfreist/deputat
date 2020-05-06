@@ -1,4 +1,1 @@
 deputat
-deputat/GUI/
-deputat/GUI/pictures/
-deputat/script/

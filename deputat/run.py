@@ -1,4 +1,4 @@
-from GUI import maingui
+from deputat.GUI import maingui
 
 
 def run_gui():

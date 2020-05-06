@@ -1,5 +1,3 @@
-import sys
-
 from PyQt5.QtWidgets import (QDialog, QDialogButtonBox, QFormLayout, QGroupBox, QLabel,
                              QLineEdit, QVBoxLayout, QMessageBox, QCheckBox, QSlider,
                              QSpinBox)
@@ -7,10 +5,8 @@ from PyQt5.QtWidgets import (QDialog, QDialogButtonBox, QFormLayout, QGroupBox, 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIntValidator
 
-sys.path.append('../')
-
-import settings
-from script.deputat import AllTeachers, AllClasses, Class, SUBJECT_LONG_DICT
+import deputat import settings
+from deputat.script.deputat import AllTeachers, AllClasses, Class, SUBJECT_LONG_DICT
 
 
 class AddTeacherPopUp(QDialog):

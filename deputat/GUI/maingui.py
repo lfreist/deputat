@@ -1,17 +1,14 @@
 import os
-import sys
 import pandas
 from PyQt5.QtWidgets import (QMainWindow, QApplication, QGroupBox, QHBoxLayout,
                              QLabel, QPushButton, QVBoxLayout, QWidget, QTabWidget,
                              QComboBox, QCheckBox, QListWidget, QAction, QFileDialog)
 from PyQt5.QtGui import QIcon
 
-sys.path.append('../')
-
-import settings
-from script.deputat import (AllTeachers, AllClasses, SUBJECT_SHORT_DICT,
+from deputat import settings
+from deputat.script.deputat import (AllTeachers, AllClasses, SUBJECT_SHORT_DICT,
                             pretty_out_classes, pretty_out_teachers)
-from GUI.popups import AddTeacherPopUp, AddClassPopUp, QuitPopUp
+from deputat.GUI.popups import AddTeacherPopUp, AddClassPopUp, QuitPopUp
 
 
 class MainWindow(QMainWindow):

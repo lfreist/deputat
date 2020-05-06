@@ -2,9 +2,7 @@ import os
 import sys
 import pandas as pd
 
-sys.path.append('../')
-
-import settings
+from deputat import settings
 
 
 # dictionary for subjects
