@@ -15,13 +15,17 @@ def get_os():
     system = sys.platform
     if system.startswith('linux'):
         return ('Linux',) + distro.linux_distribution()
-    if system.startswith('windows'):
-        return ('Windows',)
+    if system.startswith('win'):
+        return 'Windows'
     if system.startswith('darwin'):
-        return ('MacOS',)
+        return 'MacOS'
 
 def save_dir():
     home = os.getenv('HOME')
+    print(get_os())
+    if get_os() == 'Windows':
+        from pathlib import Path
+        home = str(Path.home())
     data = os.path.join(home, 'deputat_data', 'data')
     if not os.path.exists(data):
         os.mkdir(os.path.join(home, 'deputat_data'))
