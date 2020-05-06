@@ -1,11 +1,14 @@
 import os
 import sys
 import distro
+import site
 
 def base_dir():
     return os.getcwd()
 
 def icon_dir():
+    if 'deputat' in os.listdir(site.USER_SITE):
+        return os.path.join(site.USER_SITE, 'deputat', 'GUI', 'pictures')
     return os.path.join(base_dir(), 'GUI', 'pictures')
 
 def get_os():

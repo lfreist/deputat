@@ -4,12 +4,13 @@
 # Deputat
 Einfaches graphisches Benutzer Interface (GUI) zur vergabe von Schulstunden.
 ____
-Aktuelle Version: 1.0.6
-### Changes in 1.0.6
+Aktuelle Version: 1.1.0
+### Changes in 1.1.0
 - added ```*.svg``` icons to ```sdist```
 - data can now be exported as ```*.csv``` or ```*.xlsx```
 - fixed ```import``` errors
 - changed default data location to ```/home/user/deputat_data/data/```
+- fixed ```FileNotFoundError``` for ```*.svg```
 ____
 
 # Installation und Starten von deputat
