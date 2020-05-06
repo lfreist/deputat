@@ -7,6 +7,10 @@ def base_dir():
     return os.getcwd()
 
 def icon_dir():
+    if get_os() == 'MacOS':
+        path = r'/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/deputat/GUI/pictures/'
+        if os.path.exists(path):
+            return path
     if 'deputat' in os.listdir(site.USER_SITE):
         return os.path.join(site.USER_SITE, 'deputat', 'GUI', 'pictures')
     return os.path.join(base_dir(), 'GUI', 'pictures')
@@ -22,7 +26,6 @@ def get_os():
 
 def save_dir():
     home = os.getenv('HOME')
-    print(get_os())
     if get_os() == 'Windows':
         from pathlib import Path
         home = str(Path.home())
