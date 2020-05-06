@@ -156,7 +156,7 @@ class AllTeachers:
 
 
     def save_data(self, location=save):
-        save_data(self.filename, location)
+        return save_data(self.filename, location)
 
 
     def _list_teacher_hours(self):
@@ -207,7 +207,7 @@ class AllClasses:
 
 
     def save_data(self, location=save):
-        save_data(self.filename, location)
+        return save_data(self.filename, location)
 
 
     def list_levels(self):
@@ -322,8 +322,10 @@ def save_data(filename, path=save):
             for obj in AllClasses.classes:
                 print(",".join([str(i) for i in obj.list_it()]), file=file)
         file.close()
+        return True
     except TypeError as error:
         print(error)
+        return False
 
 
 def pretty_out_teachers(classes: AllClasses, teachers: AllTeachers):

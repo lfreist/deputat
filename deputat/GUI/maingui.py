@@ -100,25 +100,34 @@ class MainWindow(QMainWindow):
         path = QFileDialog.getExistingDirectory(self, 'Odner wählen')
         if not self.location:
             self.location = path
-        self.allclasses.read_data(path)
-        self.allteachers.read_data(path)
-        self.main_widget._refresh()
+        try:
+            self.allclasses.read_data(path)
+            self.allteachers.read_data(path)
+            self.main_widget._refresh()
+        except FileNotFoundError:
+            self.statusBar().showMessage('Keine Datei importiert.')
 
 
     def _import_teacher(self):
         path = QFileDialog.getOpenFileName(self, 'Lehrer wählen', self.location, "td-files (*.td)")[0]
         self.location = path
-        self.allteachers.read_data(path, file=True)
-        self.main_widget._refresh(self.main_widget)
-        self.statusBar().showMessage(f'{os.path.split(path)[1]} importiert')
+        try:
+            self.allteachers.read_data(path, file=True)
+            self.main_widget._refresh(self.main_widget)
+            self.statusBar().showMessage(f'{os.path.split(path)[1]} importiert')
+        except FileNotFoundError:
+            self.statusBar().showMessage('Keine Datei importiert.')
 
 
     def _import_class(self):
         path = QFileDialog().getOpenFileName(self, 'Klasse wählen', self.location, "cd-files (*.cd)")[0]
         self.location = path
-        self.allclasses.read_data(path, file=True)
-        self.main_widget._refresh(self.main_widget)
-        self.statusBar().showMessage(f'{os.path.split(path)[1]} importiert')
+        try:
+            self.allclasses.read_data(path, file=True)
+            self.main_widget._refresh(self.main_widget)
+            self.statusBar().showMessage(f'{os.path.split(path)[1]} importiert')
+        except FileNotFoundError:
+            self.statusBar().showMessage('Keine Datei importiert.')
 
 
     def _save(self):
@@ -133,29 +142,36 @@ class MainWindow(QMainWindow):
 
     def _export_classes(self):
         path = QFileDialog.getSaveFileName(self, 'File wählen', self.location, "csv-files (*.csv)")[0]
-        to_save = pretty_out_classes(self.allclasses)
-        to_save.to_csv(path, sep=',', index=False)
-        self.statusBar().showMessage(f'{os.path.split(path)[1]} erfolgreich exportiert')
-
+        try:
+            to_save = pretty_out_classes(self.allclasses)
+            to_save.to_csv(path, sep=',', index=False)
+            self.statusBar().showMessage(f'{os.path.split(path)[1]} erfolgreich exportiert')
+        except:
+            self.statusBar().showMessage('exportieren nicht erfolgreich')
 
     def _export_teachers(self):
         path = QFileDialog.getSaveFileName(self, 'File wählen', self.location, "csv-files (*.csv)")[0]
-        to_save = pretty_out_teachers(self.allclasses, self.allteachers)
-        to_save.to_csv(path, sep=',', index=False)
-        self.statusBar().showMessage(f'{os.path.split(path)[1]} erfolgreich exportiert')
+        try:
+            to_save = pretty_out_teachers(self.allclasses, self.allteachers)
+            to_save.to_csv(path, sep=',', index=False)
+            self.statusBar().showMessage(f'{os.path.split(path)[1]} erfolgreich exportiert')
+        except:
+            self.statusBar().showMessage('exportieren nicht erfolgreich')
 
 
     def _export_xlsx(self):
         import pandas as pd
         path = QFileDialog.getSaveFileName(self, 'File wählen', self.location, "excel-files (*.xlsx)")[0]
-        lehrer = pretty_out_teachers(self.allclasses, self.allteachers)
-        klasse = pretty_out_classes(self.allclasses)
-        writer = pd.ExcelWriter(path)
-        lehrer.to_excel(writer, 'Lehrer', index=False)
-        klasse.to_excel(writer, 'Klassen', index=False)
-        writer.save()
-        self.statusBar().showMessage(f'{os.path.split(path)[1]} erfolgreich exportiert')
-
+        try:
+            lehrer = pretty_out_teachers(self.allclasses, self.allteachers)
+            klasse = pretty_out_classes(self.allclasses)
+            writer = pd.ExcelWriter(path)
+            lehrer.to_excel(writer, 'Lehrer', index=False)
+            klasse.to_excel(writer, 'Klassen', index=False)
+            writer.save()
+            self.statusBar().showMessage(f'{os.path.split(path)[1]} erfolgreich exportiert')
+        except:
+            self.statusBar().showMessage('exportieren nicht erfolgreich')
 
 
 class MainWidget(QWidget):
