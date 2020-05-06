@@ -1,18 +1,18 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
     name='deputat',
-    version='1.0.2',
+    version='1.0.3',
     description='deputat overview',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/lfreist/deputat",
     author='lfreist',
     author_email='freist.leon@gmx.de',
-    packages=['deputat', 'deputat/GUI/', 'deputat/GUI/pictures/', 'deputat/script/'],
+    packages=find_packages(),
     package_data={'deputat': ['GUI/pictures/*.svg']},
     install_requires=[
               'PyQt5',
