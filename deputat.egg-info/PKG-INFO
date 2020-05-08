@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: deputat
-Version: 1.1.4
+Version: 1.1.5
 Summary: deputat overview
 Home-page: https://github.com/lfreist/deputat
 Author: lfreist
@@ -12,7 +12,9 @@ Description: ![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)
         # Deputat
         Einfaches graphisches Benutzer Interface (GUI) zur Vergabe von Schulstunden.
         ____
-        Aktuelle Version: 1.1.4
+        Aktuelle Version: 1.1.5
+        #### Changes in 1.1.5
+        - fixed requirement error for ```json```
         #### Changes in 1.1.4
         - added functionality to add/remove/edit subjects
         - added default subjects-file ```./data/subjects.json```

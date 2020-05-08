@@ -2,4 +2,3 @@ PyQt5
 distro
 openpyxl
 pandas
-json

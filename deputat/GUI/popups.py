@@ -252,21 +252,21 @@ class QuitPopUp(QMessageBox):
 
     def __init__(self, name, parent=None):
         super().__init__(parent)
+        self.mainwindow = parent
         self.setIcon(QMessageBox.Warning)
-        self.setText("Ohne speichern verlassen?")
+        self.setText("Vor dem Verlassen speichern?")
         self.setWindowTitle("Exit")
-        self.setDetailedText("Diese Warnung kann fälschlicherweise angezeigt werden,"\
-                             "wenn Änderungen manuell rückgängig gemacht wurden...")
-        self.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        self.setDefaultButton(QMessageBox.No)
+        self.setStandardButtons(QMessageBox.Cancel | QMessageBox.Yes | QMessageBox.No)
+        self.setDefaultButton(QMessageBox.Cancel)
 
         self._close = None
 
         returnValue = self.exec()
         if returnValue == QMessageBox.Yes:
+            self.mainwindow._save()
             self._close = True
         if returnValue == QMessageBox.No:
-            self._close = False
+            self._close = True
 
 
     def get(self):

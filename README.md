@@ -4,7 +4,9 @@
 # Deputat
 Einfaches graphisches Benutzer Interface (GUI) zur Vergabe von Schulstunden.
 ____
-Aktuelle Version: 1.1.5
+Aktuelle Version: 1.1.6
+#### Changes in 1.1.6
+- added menubar entries
 #### Changes in 1.1.5
 - fixed requirement error for ```json```
 #### Changes in 1.1.4

@@ -1,9 +1,13 @@
 import os
 import pandas
+import webbrowser
+
 from PyQt5.QtWidgets import (QMainWindow, QApplication, QGroupBox, QHBoxLayout,
                              QLabel, QPushButton, QVBoxLayout, QWidget, QTabWidget,
-                             QComboBox, QCheckBox, QListWidget, QAction, QFileDialog)
+                             QComboBox, QCheckBox, QListWidget, QAction, QFileDialog,
+                             QMessageBox)
 from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QSize
 
 from deputat import settings
 from deputat.script.deputat import (AllTeachers, AllClasses, subjects,
@@ -80,23 +84,30 @@ class MainWindow(QMainWindow):
         edit_subs = QAction(QIcon(os.path.join(self.icon_path, 'edit.svg')), "Schulfächer bearbeiten", self)
 
         edit_subs.triggered.connect(self._edit_subs)
-
         edit.addAction(edit_subs)
 
         info = menu_bar.addMenu("Info")
-        info.addAction(QAction(QIcon(os.path.join(self.icon_path, 'about.svg')), "Über", self))
-        info.addAction(QAction(QIcon(os.path.join(self.icon_path, 'github.svg')), "GitHub", self))
-        info.addAction(QAction(QIcon(os.path.join(self.icon_path, 'pypi.svg')), "PyPi", self))
+        ueber = QAction(QIcon(os.path.join(self.icon_path, 'about.svg')), "Über", self)
+        github = QAction(QIcon(os.path.join(self.icon_path, 'github.svg')), "GitHub", self)
+        pypi = QAction(QIcon(os.path.join(self.icon_path, 'pypi.svg')), "PyPi", self)
+
+        ueber.triggered.connect(self._ueber)
+        github.triggered.connect(self._github)
+        pypi.triggered.connect(self._pypi)
+
+        info.addAction(ueber)
+        info.addAction(github)
+        info.addAction(pypi)
 
         help = menu_bar.addMenu("Hilfe")
         help.addAction(QAction(QIcon(os.path.join(self.icon_path, 'mail.svg')), "Mail", self))
-        help.addAction(QAction(QIcon(os.path.join(self.icon_path, 'github.svg')), "GitHub", self))
+        help.addAction(github)
         help.addAction(QAction(QIcon(os.path.join(self.icon_path, 'readme.svg')), "Readme", self))
 
 
     def closeEvent(self, event):
         if self.changed:
-            close = QuitPopUp('exit').get()
+            close = QuitPopUp('exit', self).get()
             if close:
                 event.accept()
             else:
@@ -182,10 +193,52 @@ class MainWindow(QMainWindow):
         except:
             self.statusBar().showMessage('exportieren nicht erfolgreich')
 
+
     def _edit_subs(self):
         edit_s = EditSubsPopUp('Schulfächer bearbeiten', self)
         edit_s.setGeometry(100, 200, 500, 300)
         edit_s.show()
+
+
+    def _ueber(self):
+        msg = QMessageBox(self)
+        msg.setText(
+            """
+            <p>
+            <b>deputat version 1.1.6</b>
+            <br>
+            </p>
+            <br>
+            <p>
+            Einfaches graphisches Benutzer Interface (GUI) zur Vergabe von Schulstunden.
+            <br><br>
+            </p>
+            <b>Links</b>
+            <p>
+            GitHub: <a href="https://www.github.com/lfreist/deputat">www.github.com</a>
+            <br>
+            PyPi: <a href="https://www.pypi.org/project/deputat">www.pypi.org</a>
+            </p>
+            <br><br>
+            <b>Spenden</b>
+            <p>
+            Danke für jede Spende über <a href="https://paypal.me/lfreist">PayPal</a>.
+            </p>
+            </div>
+            """)
+        msg.setWindowTitle("About deputat")
+        msg.setStandardButtons(QMessageBox.Ok)
+        app_icon = QIcon(os.path.join(settings.icon_dir(), 'deputat.svg'))
+        msg.setIconPixmap(app_icon.pixmap(QSize(64, 64)))
+        msg.exec_()
+
+
+    def _github(self):
+        webbrowser.open('https://github.com/lfreist/deputat')
+
+
+    def _pypi(self):
+        webbrowser.open('https://pypi.org/project/deputat')
 
 
 class MainWidget(QWidget):
