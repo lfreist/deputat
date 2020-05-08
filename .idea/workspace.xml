@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="29c63c6c-c14f-454c-bca9-7cbaa6f23efd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.setup.py.swp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/deputat/data/subjects.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/deputat-1.1.2.tar.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/GUI/maingui.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/GUI/maingui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/GUI/popups.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/GUI/popups.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/script/deputat.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/script/deputat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deputat/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/deputat/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deputat.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/PKG-INFO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deputat.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/SOURCES.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deputat.egg-info/requires.txt" beforeDir="false" afterPath="$PROJECT_DIR$/deputat.egg-info/requires.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

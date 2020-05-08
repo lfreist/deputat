@@ -4,7 +4,9 @@
 # Deputat
 Einfaches graphisches Benutzer Interface (GUI) zur Vergabe von Schulstunden.
 ____
-Aktuelle Version: 1.1.4
+Aktuelle Version: 1.1.5
+#### Changes in 1.1.5
+- fixed requirement error for ```json```
 #### Changes in 1.1.4
 - added functionality to add/remove/edit subjects
 - added default subjects-file ```./data/subjects.json```

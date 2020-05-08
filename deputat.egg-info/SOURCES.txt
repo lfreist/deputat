@@ -62,5 +62,6 @@ deputat/GUI/pictures/pypi.svg
 deputat/GUI/pictures/readme.svg
 deputat/GUI/pictures/save.svg
 deputat/GUI/pictures/submit.svg
+deputat/data/subjects.json
 deputat/script/__init__.py
 deputat/script/deputat.py
