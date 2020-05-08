@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='deputat',
-    version='1.1.3',
+    version='1.1.4',
     description='deputat overview',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -13,12 +13,13 @@ setup(
     author='lfreist',
     author_email='freist.leon@gmx.de',
     packages=find_packages(),
-    package_data={'deputat': ['GUI/pictures/*.svg']},
+    package_data={'deputat': ['GUI/pictures/*.svg', 'data/*.json']},
     install_requires=[
               'PyQt5',
               'distro',
               'openpyxl',
-              'pandas'
+              'pandas',
+              'json'
               ],
     classifiers=[
         "Programming Language :: Python :: 3",

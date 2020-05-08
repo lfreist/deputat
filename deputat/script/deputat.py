@@ -1,22 +1,21 @@
 import os
-import sys
 import pandas as pd
+import json
 
 from deputat import settings
 
 
-# dictionary for subjects
-SUBJECT_LONG_DICT = {
-    'Mathe': 'M',
-    'Deutsch': 'D',
-    'Englisch': 'E',
-    'Sport': 'S',
-    'Französisch': 'F',
-    'Technik': 'T'
-}
+def subjects(reverse=False):
+    with open(settings.subs_json(), 'r') as jfile:
+        subs = json.load(jfile)
+    if reverse:
+        return {short: long for long, short in subs.items()}
+    return subs
 
-# reversed dictionary for subjects
-SUBJECT_SHORT_DICT = {short: long for long, short in SUBJECT_LONG_DICT.items()}
+def dump_subjects(subs: dict):
+    with open(settings.subs_json(), 'w') as jfile:
+        json.dump(subs, jfile)
+
 
 save = settings.save_dir()
 
@@ -98,13 +97,13 @@ class Teacher:
     def __str__(self):
         subs = {}
         for s in self.subjects:
-            s = SUBJECT_SHORT_DICT[s]
+            s = subjects(True)[s]
             subs[s] = 0
         for c in AllClasses.classes:
             for s in c.subjects:
-                if SUBJECT_SHORT_DICT[s] in subs:
+                if subjects(True)[s] in subs:
                     if c.subjects[s][1] == self.short:
-                        subs[SUBJECT_SHORT_DICT[s]] += int(c.subjects[s][0])
+                        subs[subjects(True)[s]] += int(c.subjects[s][0])
         text = f'Name:\t {self.name} ({self.short})\n' \
                f'Fächer:\t {_build_string_from_dict(subs)}\n' \
                f'Stunden: {self.hours} ({self._get_hours_left()}h übrig)'

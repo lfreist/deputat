@@ -1,12 +1,12 @@
 from PyQt5.QtWidgets import (QDialog, QDialogButtonBox, QFormLayout, QGroupBox, QLabel,
                              QLineEdit, QVBoxLayout, QMessageBox, QCheckBox, QSlider,
-                             QSpinBox)
+                             QSpinBox, QPushButton)
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIntValidator
 
 from deputat import settings
-from deputat.script.deputat import AllTeachers, AllClasses, Class, SUBJECT_LONG_DICT
+from deputat.script.deputat import subjects, dump_subjects
 
 
 class AddTeacherPopUp(QDialog):
@@ -34,7 +34,7 @@ class AddTeacherPopUp(QDialog):
         self.formGroupBox = QGroupBox("Informationen")
         self.layout = QFormLayout()
         self.name, self.short = QLineEdit(), QLineEdit()
-        self.subjects = [QCheckBox(s) for s in SUBJECT_LONG_DICT]
+        self.subjects = [QCheckBox(s) for s in subjects()]
         self.layout.addRow(QLabel("Name:"), self.name)
         self.layout.addRow(QLabel("Kürzel:"), self.short)
         self.layout.addRow(QLabel("Fächer:"), self.subjects[0])
@@ -70,9 +70,9 @@ class AddTeacherPopUp(QDialog):
         for i, o in enumerate(self.subjects):
             if o.isChecked():
                 index.append(i)
-        for i, o in enumerate(SUBJECT_LONG_DICT):
+        for i, o in enumerate(subjects()):
             if i in index:
-                subs.append(SUBJECT_LONG_DICT[o])
+                subs.append(subjects()[o])
         if not subs or not self.name.text() or not self.short.text() or not self.hours.value():
             return
         self.mainwidget.mainwindow.allteachers.add_teacher(None, self.name.text(), self.short.text(), int(self.hours.value()), subs)
@@ -124,7 +124,7 @@ class AddClassPopUp(QDialog):
 
     def get_subjects(self):
         liste = []
-        for s in SUBJECT_LONG_DICT:
+        for s in subjects():
             label = QLabel(f'    {s}')
             spin = QSpinBox()
             spin.setValue(0)
@@ -152,7 +152,7 @@ class AddClassPopUp(QDialog):
             hours = int(o[1].text())
             name = o[0].text().strip()
             if hours:
-                subs[SUBJECT_LONG_DICT[name]] = [hours, 'null']
+                subs[subjects()[name]] = [hours, 'null']
         if not subs or not self.name.text() or not self.level.text() or not self.valid:
             return
         self.mainwidget.mainwindow.allclasses.add_class(None, int(self.level.text()), self.name.text(), subs)
@@ -161,6 +161,91 @@ class AddClassPopUp(QDialog):
         self.mainwidget.mainwindow.changed = True
         self.accept()
 
+
+class EditSubsPopUp(QDialog):
+    icon_path = settings.icon_dir()
+    NumGridRows = 3
+    NumButtons = 4
+
+    def __init__(self, name, parent=None):
+        super().__init__(parent)
+        self.mainwindow = parent
+
+        self.create_form_GB()
+
+        button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        button_box.accepted.connect(self.add)
+        button_box.rejected.connect(self.reject)
+
+        main_layout = QVBoxLayout()
+        main_layout.addWidget(self.formGroupBox)
+        main_layout.addWidget(button_box)
+        self.setLayout(main_layout)
+
+        self.setWindowTitle(name)
+
+    def create_form_GB(self):
+        self.formGroupBox = QGroupBox("Schulfächer")
+        add_button = QPushButton('Schulfach hinzufügen')
+        add_button.clicked.connect(self.row_add)
+        self.layout = QVBoxLayout()
+        self.layout_GB = QFormLayout()
+        self.fill_layout()
+        self.layout.addLayout(self.layout_GB)
+        self.layout.addWidget(add_button)
+        self.formGroupBox.setLayout(self.layout)
+
+
+    def fill_layout(self):
+        self.obj_list = self.get_subjects()
+        for l, s in self.obj_list:
+            self.layout_GB.addRow(l, s)
+
+
+    def get_subjects(self):
+        liste = []
+        subjects_dict = subjects()
+        subjects_list = sorted([(long, short) for long, short in subjects_dict.items()])
+        for l, s in subjects_list:
+            long = QLineEdit(l)
+            short = QLineEdit(s)
+            liste.append((long, short))
+        return liste
+
+
+    def row_add(self):
+        self.long = QLineEdit()
+        self.short = QLineEdit()
+        self.long.textChanged.connect(self.is_valid)
+        self.short.textChanged.connect(self.is_valid)
+        self.obj_list.append((self.long, self.short))
+        self.layout_GB.addRow(self.long, self.short)
+
+
+    def is_valid(self):
+        if self.long.text().strip() in subjects():
+            self.long.setStyleSheet('Background: red')
+        else:
+            self.long.setStyleSheet('Background: white')
+        if self.short.text().strip() in subjects(True):
+            self.short.setStyleSheet('Background: red')
+        else:
+            self.short.setStyleSheet('Background: white')
+
+
+
+    def build_dict(self):
+        subs_dict = {}
+        for l, s in self.obj_list:
+            if l.text().strip() != '' and s.text().strip() != '':
+                subs_dict[l.text().strip()] = s.text().strip()
+        dump_subjects(subs_dict)
+
+
+    def add(self):
+        self.build_dict()
+        self.mainwindow.statusBar().showMessage(f'Schulfächer aktualisiert')
+        self.accept()
 
 
 class QuitPopUp(QMessageBox):

@@ -6,9 +6,9 @@ from PyQt5.QtWidgets import (QMainWindow, QApplication, QGroupBox, QHBoxLayout,
 from PyQt5.QtGui import QIcon
 
 from deputat import settings
-from deputat.script.deputat import (AllTeachers, AllClasses, SUBJECT_SHORT_DICT,
+from deputat.script.deputat import (AllTeachers, AllClasses, subjects,
                             pretty_out_classes, pretty_out_teachers)
-from deputat.GUI.popups import AddTeacherPopUp, AddClassPopUp, QuitPopUp
+from deputat.GUI.popups import AddTeacherPopUp, AddClassPopUp, QuitPopUp, EditSubsPopUp
 
 
 class MainWindow(QMainWindow):
@@ -73,6 +73,15 @@ class MainWindow(QMainWindow):
         file.addSeparator()
 
         file.addAction(QAction(QIcon(os.path.join(self.icon_path, 'exit.svg')), "Quit", self))
+
+        edit = menu_bar.addMenu("Bearbeiten")
+        add_teacher = QAction(QIcon(os.path.join(self.icon_path, 'add.svg')), "Lehrer Hinzufügen", self)
+        add_class = QAction(QIcon(os.path.join(self.icon_path, 'add.svg')), "Klasse Hinzufügen", self)
+        edit_subs = QAction(QIcon(os.path.join(self.icon_path, 'edit.svg')), "Schulfächer bearbeiten", self)
+
+        edit_subs.triggered.connect(self._edit_subs)
+
+        edit.addAction(edit_subs)
 
         info = menu_bar.addMenu("Info")
         info.addAction(QAction(QIcon(os.path.join(self.icon_path, 'about.svg')), "Über", self))
@@ -172,6 +181,11 @@ class MainWindow(QMainWindow):
             self.statusBar().showMessage(f'{os.path.split(path)[1]} erfolgreich exportiert')
         except:
             self.statusBar().showMessage('exportieren nicht erfolgreich')
+
+    def _edit_subs(self):
+        edit_s = EditSubsPopUp('Schulfächer bearbeiten', self)
+        edit_s.setGeometry(100, 200, 500, 300)
+        edit_s.show()
 
 
 class MainWidget(QWidget):
@@ -428,7 +442,7 @@ class MainWidget(QWidget):
 
     def _class_info_item(self, short: str, info: list, obj):
         layout = QHBoxLayout()
-        name = SUBJECT_SHORT_DICT[short]
+        name = subjects(True)[short]
         hours = str(info[0])
         teacher = info[1]
         name_label = QLabel(name)

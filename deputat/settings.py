@@ -1,11 +1,15 @@
 import os
 import sys
 import distro
-import site
 import deputat
 
 def base_dir():
     return deputat.__path__[0]
+
+def subs_json():
+    if os.path.exists(os.path.join(save_dir(), 'subjects.json')):
+        return os.path.join(save_dir(), 'subjects.json')
+    return os.path.join(base_dir(), 'data', 'subjects.json')
 
 def icon_dir():
     base = base_dir()
@@ -26,7 +30,9 @@ def save_dir():
         from pathlib import Path
         home = str(Path.home())
     data = os.path.join(home, 'deputat_data', 'data')
-    if not os.path.exists(data):
+    if not os.path.exists(os.path.split(data)[0]):
         os.mkdir(os.path.join(home, 'deputat_data'))
+        os.mkdir(data)
+    elif not os.path.exists(data):
         os.mkdir(data)
     return data
