@@ -144,7 +144,7 @@ class MainWindow(QMainWindow):
         self.location = path
         try:
             self.allclasses.read_data(path, file=True)
-            self.main_widget._refresh(self.main_widget)
+            self.main_widget._refresh()
             self.statusBar().showMessage(f'{os.path.split(path)[1]} importiert')
         except FileNotFoundError:
             self.statusBar().showMessage('Keine Datei importiert.')
@@ -495,7 +495,10 @@ class MainWidget(QWidget):
 
     def _class_info_item(self, short: str, info: list, obj):
         layout = QHBoxLayout()
-        name = subjects(True)[short]
+        try:
+            name = subjects(True)[short]
+        except KeyError as error:
+            print(error)
         hours = str(info[0])
         teacher = info[1]
         name_label = QLabel(name)
