@@ -26,5 +26,5 @@ ____
 # Installation und Starten von deputat
 1. [Installiere python3](https://github.com/lfreist/deputat/blob/master/infos/install_python.md)
 2. Installiere deputat über pythons packetmanager [PyPi](https://pypi.org/). Gebe dazu
-in der Konsole ```python3 -m pip install deputat``` ein
-3. Starte deputat über ```python3 -m deputat```
+in der Konsole ```python3 -m pip install deputat``` (Linux/MacOS) oder ```py -m pip install deputat``` (Windows) ein
+3. Starte deputat über ```python3 -m deputat``` (Linux/MacOS) oder ```py -m deputat``` (Windows)
